@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1160010465920711182}
   - component: {fileID: 6072951218493858760}
   - component: {fileID: 3135286265311381083}
+  - component: {fileID: 1767064100770371227}
+  - component: {fileID: 1920882037112342004}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -72,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245f01a20af39524fa02a71a665c7677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &3135286265311381083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +87,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7ff9b1f7bfde846a69553159046c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!143 &1767064100770371227
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7495763540847280192}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 0.6
+  m_Radius: 0.05
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.28, z: 0}
+--- !u!114 &1920882037112342004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7495763540847280192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1e3d2ffad1c54d89c461ce2dfe51e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1001 &6229574621664497154
 PrefabInstance:
   m_ObjectHideFlags: 0

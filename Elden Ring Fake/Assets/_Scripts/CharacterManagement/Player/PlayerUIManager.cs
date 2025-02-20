@@ -7,7 +7,7 @@ namespace SG {
         internal static PlayerUIManager Instance { get; private set; }
 
         [Header("---------- Network Join ----------")]
-        bool startGameAsClient;
+        [SerializeField] bool startGameAsClient;
 
         void Awake() {
             if (Instance == null) {
