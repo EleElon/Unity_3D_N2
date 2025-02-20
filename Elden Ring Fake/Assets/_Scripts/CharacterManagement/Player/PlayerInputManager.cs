@@ -9,9 +9,15 @@ namespace SG {
         internal static PlayerInputManager Instance { get; private set; }
 
         PlayerControls _playerControls;
+
+        [Header("---------- Player Movement Input ----------")]
         [SerializeField] Vector2 movementInput;
         [SerializeField] float verticalInput, horizontalInput;
         [SerializeField] float moveAmount;
+
+        [Header("---------- Camera Movement Input ----------")]
+        [SerializeField] Vector2 cameraInput;
+        [SerializeField] float cameraVerticalInput, cameraHorizontalInput;
 
         void Awake() {
             if (Instance == null) {
@@ -31,7 +37,8 @@ namespace SG {
         }
 
         void Update() {
-            HandleMovementInput();
+            HandlePlayerMovementInput();
+            HandleCameraMovementInput();
         }
 
         private void OnScreenChanged(Scene oldScene, Scene newScene) {
@@ -48,6 +55,8 @@ namespace SG {
                 _playerControls = new PlayerControls();
 
                 _playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+
+                _playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             }
 
             _playerControls.Enable();
@@ -68,7 +77,7 @@ namespace SG {
             }
         }
 
-        void HandleMovementInput() {
+        void HandlePlayerMovementInput() {
             if (_playerControls != null) {
                 verticalInput = movementInput.y;
                 horizontalInput = movementInput.x;
@@ -88,6 +97,17 @@ namespace SG {
             }
         }
 
+        void HandleCameraMovementInput() {
+            if (_playerControls != null) {
+                cameraVerticalInput = cameraInput.y;
+                cameraHorizontalInput = cameraInput.x;
+            }
+            else {
+                cameraVerticalInput = Input.GetAxisRaw("Mouse Y");
+                cameraHorizontalInput = Input.GetAxisRaw("Mouse X");
+            }
+        }
+
         internal float GetPlayerMoveAmount() {
             return moveAmount;
         }
@@ -98,6 +118,14 @@ namespace SG {
 
         internal float GetHorizontalInput() {
             return horizontalInput;
+        }
+
+        internal float GetCameraVerticalInput() {
+            return cameraVerticalInput;
+        }
+
+        internal float GetCameraHorizontalInput() {
+            return cameraHorizontalInput;
         }
     }
 }

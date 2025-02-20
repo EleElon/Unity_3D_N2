@@ -30,5 +30,9 @@ namespace SG {
         internal CharacterController GetCharacterController() {
             return _characterController;
         }
+
+        protected virtual void LateUpdate() {
+
+        }
     }
 }

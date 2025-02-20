@@ -19,5 +19,22 @@ namespace SG {
 
             _playerLocomotionManager.HandleAllMovement();
         }
+
+        protected override void LateUpdate() {
+            if (!IsOwner)
+                return;
+
+            base.LateUpdate();
+
+            PlayerCameraManager.Instance.HandleAllCameraActions();
+        }
+
+        public override void OnNetworkSpawn() {
+            base.OnNetworkSpawn();
+
+            if (IsOwner) {
+                PlayerCameraManager.Instance.SetPlayerManager(this);
+            }
+        }
     }
 }
