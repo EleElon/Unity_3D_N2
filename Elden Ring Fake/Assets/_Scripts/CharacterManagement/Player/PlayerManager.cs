@@ -4,6 +4,7 @@ namespace SG {
     class PlayerManager : CharacterManager {
 
         PlayerLocomotionManager _playerLocomotionManager;
+        
         protected override void Awake() {
             base.Awake();
 

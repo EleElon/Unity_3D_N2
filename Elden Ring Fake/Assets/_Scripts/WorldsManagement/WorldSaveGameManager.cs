@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace SG {
     class WorldSaveGameManager : MonoBehaviour {
+        
         internal static WorldSaveGameManager Instance { get; private set; }
 
         int worldSceneIndex = 1;

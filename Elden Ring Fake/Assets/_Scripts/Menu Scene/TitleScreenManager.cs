@@ -3,6 +3,7 @@ using Unity.Netcode;
 
 namespace SG {
     class TitleScreenManager : MonoBehaviour {
+        
         public void StartNetworkAsHost() {
             NetworkManager.Singleton.StartHost();
         }
