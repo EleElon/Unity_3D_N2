@@ -9,6 +9,7 @@ namespace SG {
         internal static PlayerInputManager Instance { get; private set; }
 
         PlayerControls _playerControls;
+        PlayerManager _playerManager;
 
         [Header("---------- Player Movement Input ----------")]
         [SerializeField] Vector2 movementInput;
@@ -95,6 +96,11 @@ namespace SG {
             else if (moveAmount > 0.5 && moveAmount <= 1) {
                 moveAmount = 1;
             }
+
+            if (_playerManager == null)
+                return;
+
+            _playerManager.GetPlayerAnimatorManager().UpdateAnimatorMovementParameters(0, moveAmount);
         }
 
         void HandleCameraMovementInput() {
@@ -108,7 +114,7 @@ namespace SG {
             }
         }
 
-        internal float GetPlayerMoveAmount() {
+        internal float GetMoveAmount() {
             return moveAmount;
         }
 
@@ -126,6 +132,10 @@ namespace SG {
 
         internal float GetCameraHorizontalInput() {
             return cameraHorizontalInput;
+        }
+
+        internal void SetPlayerManager(PlayerManager playerManager) {
+            _playerManager = playerManager;
         }
     }
 }

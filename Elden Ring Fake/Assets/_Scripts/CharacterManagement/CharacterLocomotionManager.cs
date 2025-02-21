@@ -6,5 +6,9 @@ namespace SG {
         protected virtual void Awake() {
 
         }
+
+        protected virtual void Update() {
+            
+        }
     }
 }

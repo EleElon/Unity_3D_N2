@@ -11,6 +11,11 @@ namespace SG {
         float networkPositionSmoothTime = 0.1f;
         float networkRotationSmoothTime = 0.1f;
 
+        [Header("--------- Animator ----------")]
+        NetworkVariable<float> horizontalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        NetworkVariable<float> moveAmount = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
         internal Vector3 GetNetworkPositionVelocity() {
             return networkPositionVelocity;
         }
@@ -37,6 +42,30 @@ namespace SG {
 
         internal Quaternion GetNetworkRotation() {
             return networkRotation.Value;
+        }
+
+        internal float SetHorizontalMovement(float movement) {
+            return horizontalMovement.Value = movement;
+        }
+
+        internal float GetHorizontalMovement() {
+            return horizontalMovement.Value;
+        }
+
+        internal float SetVerticalMovement(float movement) {
+            return verticalMovement.Value = movement;
+        }
+
+        internal float GetVerticalMovement() {
+            return verticalMovement.Value;
+        }
+
+        internal float SetMoveAmount(float amount) {
+            return moveAmount.Value = amount;
+        }
+
+        internal float GetMoveAmount() {
+            return moveAmount.Value;
         }
     }
 }

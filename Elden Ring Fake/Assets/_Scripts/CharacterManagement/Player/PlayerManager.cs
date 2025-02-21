@@ -4,11 +4,13 @@ namespace SG {
     class PlayerManager : CharacterManager {
 
         PlayerLocomotionManager _playerLocomotionManager;
+        PlayerAnimatorManager _playerAnimatorManager;
 
         protected override void Awake() {
             base.Awake();
 
             _playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+            _playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         }
 
         protected override void Update() {
@@ -34,7 +36,12 @@ namespace SG {
 
             if (IsOwner) {
                 PlayerCameraManager.Instance.SetPlayerManager(this);
+                PlayerInputManager.Instance.SetPlayerManager(this);
             }
+        }
+
+        internal PlayerAnimatorManager GetPlayerAnimatorManager() {
+            return _playerAnimatorManager;
         }
     }
 }

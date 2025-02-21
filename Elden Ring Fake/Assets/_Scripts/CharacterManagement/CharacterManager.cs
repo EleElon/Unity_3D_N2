@@ -7,11 +7,15 @@ namespace SG {
         protected CharacterController _characterController;
         CharacterNetworkManager _characterNetworkManager;
 
+        Animator _animator;
+
         protected virtual void Awake() {
             DontDestroyOnLoad(gameObject);
 
             _characterController = GetComponent<CharacterController>();
             _characterNetworkManager = GetComponent<CharacterNetworkManager>();
+
+            _animator = GetComponent<Animator>();
         }
 
         protected virtual void Update() {
@@ -31,8 +35,16 @@ namespace SG {
             return _characterController;
         }
 
+        internal CharacterNetworkManager GetCharacterNetworkManager() {
+            return _characterNetworkManager;
+        }
+
         protected virtual void LateUpdate() {
 
+        }
+
+        internal Animator GetAnimator() {
+            return _animator;
         }
     }
 }
