@@ -20,6 +20,23 @@ namespace SG {
         [SerializeField] Vector2 cameraInput;
         [SerializeField] float cameraVerticalInput, cameraHorizontalInput;
 
+        [Header("---------- Player Actions Input ----------")]
+        [SerializeField] bool dodgeInput = false;
+
+        void OnEnable() {
+            if (_playerControls == null) {
+                _playerControls = new PlayerControls();
+
+                _playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+
+                _playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+                _playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+            }
+
+            _playerControls.Enable();
+        }
+
         void Awake() {
             if (Instance == null) {
                 Instance = this;
@@ -38,8 +55,13 @@ namespace SG {
         }
 
         void Update() {
+            HandleAllInputs();
+        }
+
+        void HandleAllInputs() {
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
+            HandleDodgeInput();
         }
 
         private void OnScreenChanged(Scene oldScene, Scene newScene) {
@@ -49,18 +71,6 @@ namespace SG {
             else {
                 Instance.enabled = false;
             }
-        }
-
-        void OnEnable() {
-            if (_playerControls == null) {
-                _playerControls = new PlayerControls();
-
-                _playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-
-                _playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
-            }
-
-            _playerControls.Enable();
         }
 
         void OnDestroy() {
@@ -83,10 +93,10 @@ namespace SG {
                 verticalInput = movementInput.y;
                 horizontalInput = movementInput.x;
             }
-            else {
-                verticalInput = Input.GetAxisRaw("Vertical");
-                horizontalInput = Input.GetAxisRaw("Horizontal");
-            }
+            // else {
+            //     verticalInput = Input.GetAxisRaw("Vertical");
+            //     horizontalInput = Input.GetAxisRaw("Horizontal");
+            // }
 
             if (Input.GetKey(KeyCode.LeftControl) && (verticalInput != 0 || horizontalInput != 0)) {
                 moveAmount = 0.5f;
@@ -113,9 +123,17 @@ namespace SG {
                 cameraVerticalInput = cameraInput.y;
                 cameraHorizontalInput = cameraInput.x;
             }
-            else {
-                cameraVerticalInput = Input.GetAxisRaw("Mouse Y");
-                cameraHorizontalInput = Input.GetAxisRaw("Mouse X");
+            // else {
+            //     cameraVerticalInput = Input.GetAxisRaw("Mouse Y");
+            //     cameraHorizontalInput = Input.GetAxisRaw("Mouse X");
+            // }
+        }
+
+        void HandleDodgeInput() {
+            if (dodgeInput || Input.GetKeyDown(KeyCode.Space)) {
+                dodgeInput = false;
+
+                _playerManager.GetPlayerLocomotionManager().AttemptToPerformDodge();
             }
         }
 

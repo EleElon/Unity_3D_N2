@@ -8,9 +8,14 @@ namespace SG {
         PlayerManager _playerManager;
         float verticalMovement, horizontalMovement;
         float moveAmount;
+
+        [Header("---------- Movement Settings ----------")]
         Vector3 moveDirection;
         Vector3 targetRotationDirection;
-        float walkingSpeed = 2, runningSpeed = 5, rotationSpeed = 15;
+        float walkingSpeed = 1.5f, runningSpeed = 3.5f, rotationSpeed = 15;
+
+        [Header("---------- Dodge ----------")]
+        Vector3 rollDirection;
 
         protected override void Awake() {
             base.Awake();
@@ -36,6 +41,9 @@ namespace SG {
         }
 
         internal void HandleAllMovement() {
+            if (_playerManager.GetIsPerformingAction())
+                return;
+
             HandleGroundedMovement();
             HandleRotation();
         }
@@ -47,6 +55,9 @@ namespace SG {
         }
 
         void HandleGroundedMovement() {
+            if (!_playerManager.GetCanMove())
+                return;
+
             GetMovementValues();
 
             moveDirection = PlayerCameraManager.Instance.transform.forward * verticalMovement;
@@ -63,6 +74,9 @@ namespace SG {
         }
 
         void HandleRotation() {
+            if (!_playerManager.GetCanRotate())
+                return;
+
             targetRotationDirection = Vector3.zero;
             targetRotationDirection = PlayerCameraManager.Instance.GetCamera().transform.forward * verticalMovement;
             targetRotationDirection += PlayerCameraManager.Instance.GetCamera().transform.right * horizontalMovement;
@@ -76,6 +90,26 @@ namespace SG {
             Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
+        }
+
+        internal void AttemptToPerformDodge() {
+            if (_playerManager.GetIsPerformingAction())
+                return;
+
+            if (PlayerInputManager.Instance.GetMoveAmount() > 0) {
+                rollDirection = PlayerCameraManager.Instance.GetCamera().transform.forward * PlayerInputManager.Instance.GetVerticalInput();
+                rollDirection += PlayerCameraManager.Instance.GetCamera().transform.right * PlayerInputManager.Instance.GetHorizontalInput();
+                rollDirection.y = 0;
+                rollDirection.Normalize();
+
+                Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
+                _playerManager.transform.rotation = playerRotation;
+
+                _playerManager.GetPlayerAnimatorManager().PlayTargetActionAnimation("Roll_Forward_01", true, true);
+            }
+            else {
+                _playerManager.GetPlayerAnimatorManager().PlayTargetActionAnimation("Back_Step_01", true, true);
+            }
         }
     }
 }

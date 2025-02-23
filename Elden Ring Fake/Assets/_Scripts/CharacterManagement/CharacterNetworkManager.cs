@@ -4,6 +4,8 @@ using Unity.Netcode;
 namespace SG {
     class CharacterNetworkManager : NetworkBehaviour {
 
+        CharacterManager _characterManager;
+
         [Header("--------- Position ---------")]
         NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         NetworkVariable<Quaternion> networkRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -15,6 +17,29 @@ namespace SG {
         NetworkVariable<float> horizontalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         NetworkVariable<float> moveAmount = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+        protected virtual void Awake() {
+            _characterManager = GetComponent<CharacterManager>();
+        }
+
+        [ServerRpc]
+        internal void NotifyTheServerOfActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion) {
+            if (IsServer) {
+                PlayActionAnimationForAllClientsClientRpc(clientID, animationID, applyRootMotion);
+            }
+        }
+
+        [ClientRpc]
+        void PlayActionAnimationForAllClientsClientRpc(ulong clientID, string animationID, bool applyRootMotion) {
+            if (clientID != NetworkManager.Singleton.LocalClientId) {
+                PerformActionAnimationFromServer(animationID, applyRootMotion);
+            }
+        }
+
+        void PerformActionAnimationFromServer(string animationID, bool applyRootMotion) {
+            _characterManager.SetApplyRootMotion(applyRootMotion);
+            _characterManager.GetAnimator().CrossFade(animationID, 0.2f);
+        }
 
         internal Vector3 GetNetworkPositionVelocity() {
             return networkPositionVelocity;

@@ -9,6 +9,11 @@ namespace SG {
 
         Animator _animator;
 
+        [Header("---------- Flags ----------")]
+        bool isPerformingAction = false;
+        bool canRotate = true, canMove = true;
+        bool applyRootMotion = false;
+
         protected virtual void Awake() {
             DontDestroyOnLoad(gameObject);
 
@@ -45,6 +50,38 @@ namespace SG {
 
         internal Animator GetAnimator() {
             return _animator;
+        }
+
+        internal bool GetIsPerformingAction() {
+            return isPerformingAction;
+        }
+
+        internal void SetIsPerformingAction(bool state) {
+            isPerformingAction = state;
+        }
+
+        internal bool GetCanMove() {
+            return canMove;
+        }
+
+        internal void SetCanMove(bool state) {
+            canMove = state;
+        }
+
+        internal bool GetCanRotate() {
+            return canRotate;
+        }
+
+        internal void SetCanRotate(bool state) {
+            canRotate = state;
+        }
+
+        internal bool GetApplyRootMotion() {
+            return applyRootMotion;
+        }
+
+        internal void SetApplyRootMotion(bool state) {
+            applyRootMotion = state;
         }
     }
 }

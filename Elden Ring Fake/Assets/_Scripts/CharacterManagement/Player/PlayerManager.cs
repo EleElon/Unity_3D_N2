@@ -43,5 +43,9 @@ namespace SG {
         internal PlayerAnimatorManager GetPlayerAnimatorManager() {
             return _playerAnimatorManager;
         }
+
+        internal PlayerLocomotionManager GetPlayerLocomotionManager() {
+            return _playerLocomotionManager;
+        }
     }
 }
