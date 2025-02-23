@@ -66,12 +66,14 @@ namespace SG {
 
             cameraRotation.y = leftAndRightLookAngle;
             targetRotation = Quaternion.Euler(cameraRotation);
-            transform.rotation = targetRotation;
+            // transform.rotation = targetRotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
 
             cameraRotation = Vector3.zero;
             cameraRotation.x = upAndDownLookAngle;
             targetRotation = Quaternion.Euler(cameraRotation);
-            cameraPivotTransform.localRotation = targetRotation;
+            // cameraPivotTransform.localRotation = targetRotation;
+            cameraPivotTransform.localRotation = Quaternion.Slerp(cameraPivotTransform.localRotation, targetRotation, Time.deltaTime * 2f);
         }
 
         void HandleCollisions() {

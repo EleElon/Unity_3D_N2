@@ -88,7 +88,12 @@ namespace SG {
                 horizontalInput = Input.GetAxisRaw("Horizontal");
             }
 
-            moveAmount = Mathf.Clamp01(MathF.Abs(verticalInput) + MathF.Abs(horizontalInput));
+            if (Input.GetKey(KeyCode.LeftControl) && (verticalInput != 0 || horizontalInput != 0)) {
+                moveAmount = 0.5f;
+            }
+            else {
+                moveAmount = Mathf.Clamp01(MathF.Abs(verticalInput) + MathF.Abs(horizontalInput));
+            }
 
             if (moveAmount <= 0.5 && moveAmount > 0) {
                 moveAmount = 0.5f;
