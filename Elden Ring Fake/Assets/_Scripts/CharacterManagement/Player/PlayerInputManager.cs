@@ -23,6 +23,8 @@ namespace SG {
         [Header("---------- Player Actions Input ----------")]
         [SerializeField] bool dodgeInput = false;
 
+        [SerializeField] bool sprintInput = false;
+
         void OnEnable() {
             if (_playerControls == null) {
                 _playerControls = new PlayerControls();
@@ -32,6 +34,9 @@ namespace SG {
                 _playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
 
                 _playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+
+                _playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
+                _playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
             }
 
             _playerControls.Enable();
@@ -62,6 +67,7 @@ namespace SG {
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
+            HandleSprintInput();
         }
 
         private void OnScreenChanged(Scene oldScene, Scene newScene) {
@@ -115,7 +121,7 @@ namespace SG {
             if (_playerManager == null)
                 return;
 
-            _playerManager.GetPlayerAnimatorManager().UpdateAnimatorMovementParameters(0, moveAmount);
+            _playerManager.GetPlayerAnimatorManager().UpdateAnimatorMovementParameters(0, moveAmount, _playerManager.GetPlayerNetworkManager().GetIsSprinting());
         }
 
         void HandleCameraMovementInput() {
@@ -130,10 +136,19 @@ namespace SG {
         }
 
         void HandleDodgeInput() {
-            if (dodgeInput || Input.GetKeyDown(KeyCode.Space)) {
+            if (dodgeInput) {
                 dodgeInput = false;
 
                 _playerManager.GetPlayerLocomotionManager().AttemptToPerformDodge();
+            }
+        }
+
+        void HandleSprintInput() {
+            if (sprintInput) {
+                _playerManager.GetPlayerLocomotionManager().HandleSprinting();
+            }
+            else {
+                _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
             }
         }
 

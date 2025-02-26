@@ -5,12 +5,14 @@ namespace SG {
 
         PlayerLocomotionManager _playerLocomotionManager;
         PlayerAnimatorManager _playerAnimatorManager;
+        PlayerNetworkManager _playerNetworkManager;
 
         protected override void Awake() {
             base.Awake();
 
             _playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             _playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+            _playerNetworkManager = GetComponent<PlayerNetworkManager>();
         }
 
         protected override void Update() {
@@ -46,6 +48,10 @@ namespace SG {
 
         internal PlayerLocomotionManager GetPlayerLocomotionManager() {
             return _playerLocomotionManager;
+        }
+
+        internal PlayerNetworkManager GetPlayerNetworkManager() {
+            return _playerNetworkManager;
         }
     }
 }

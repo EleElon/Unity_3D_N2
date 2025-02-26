@@ -18,6 +18,9 @@ namespace SG {
         NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         NetworkVariable<float> moveAmount = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+        [Header("---------- Flags ----------")]
+        NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
         protected virtual void Awake() {
             _characterManager = GetComponent<CharacterManager>();
         }
@@ -91,6 +94,14 @@ namespace SG {
 
         internal float GetMoveAmount() {
             return moveAmount.Value;
+        }
+
+        internal bool GetIsSprinting() {
+            return isSprinting.Value;
+        }
+
+        internal void SetIsSprinting(bool state) {
+            isSprinting.Value = state;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SG {
         [Header("---------- Movement Settings ----------")]
         Vector3 moveDirection;
         Vector3 targetRotationDirection;
-        float walkingSpeed = 1.5f, runningSpeed = 3.5f, rotationSpeed = 15;
+        float walkingSpeed = 2f, runningSpeed = 5f, sprintingSpeed = 6.5f, rotationSpeed = 15;
 
         [Header("---------- Dodge ----------")]
         Vector3 rollDirection;
@@ -36,7 +36,7 @@ namespace SG {
                 horizontalMovement = _playerManager.GetCharacterNetworkManager().GetHorizontalMovement();
                 moveAmount = _playerManager.GetCharacterNetworkManager().GetMoveAmount();
 
-                _playerManager.GetPlayerAnimatorManager().UpdateAnimatorMovementParameters(0, moveAmount);
+                _playerManager.GetPlayerAnimatorManager().UpdateAnimatorMovementParameters(0, moveAmount, _playerManager.GetPlayerNetworkManager().GetIsSprinting());
             }
         }
 
@@ -65,11 +65,16 @@ namespace SG {
             moveDirection.Normalize();
             moveDirection.y = 0;
 
-            if (PlayerInputManager.Instance.GetMoveAmount() > 0.5f) {
-                _playerManager.GetCharacterController().Move(moveDirection * runningSpeed * Time.deltaTime);
+            if (_playerManager.GetPlayerNetworkManager().GetIsSprinting()) {
+                _playerManager.GetCharacterController().Move(moveDirection * sprintingSpeed * Time.deltaTime);
             }
-            else if (PlayerInputManager.Instance.GetMoveAmount() <= 0.5f) {
-                _playerManager.GetCharacterController().Move(moveDirection * walkingSpeed * Time.deltaTime);
+            else {
+                if (PlayerInputManager.Instance.GetMoveAmount() > 0.5f) {
+                    _playerManager.GetCharacterController().Move(moveDirection * runningSpeed * Time.deltaTime);
+                }
+                else if (PlayerInputManager.Instance.GetMoveAmount() <= 0.5f) {
+                    _playerManager.GetCharacterController().Move(moveDirection * walkingSpeed * Time.deltaTime);
+                }
             }
         }
 
@@ -90,6 +95,19 @@ namespace SG {
             Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
+        }
+
+        internal void HandleSprinting() {
+            if (_playerManager.GetIsPerformingAction()) {
+                _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
+            }
+
+            if (moveAmount >= 0.5) {
+                _playerManager.GetPlayerNetworkManager().SetIsSprinting(true);
+            }
+            else {
+                _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
+            }
         }
 
         internal void AttemptToPerformDodge() {

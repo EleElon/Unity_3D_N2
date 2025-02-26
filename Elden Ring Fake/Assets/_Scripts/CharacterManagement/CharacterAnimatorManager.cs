@@ -6,15 +6,25 @@ namespace SG {
 
         CharacterManager _characterManager;
 
-        float horizontal, vertical;
+        int horizontal, vertical;
 
         protected virtual void Awake() {
             _characterManager = GetComponent<CharacterManager>();
+
+            vertical = Animator.StringToHash("Vertical");
+            horizontal = Animator.StringToHash("Horizontal");
         }
 
-        internal void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue) {
-            _characterManager.GetAnimator().SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-            _characterManager.GetAnimator().SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
+        internal void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, bool isSprinting) {
+            float verticalAmount = verticalValue;
+            float horizontalAmount = horizontalValue;
+
+            if (isSprinting) {
+                verticalAmount = 2;
+            }
+
+            _characterManager.GetAnimator().SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);
+            _characterManager.GetAnimator().SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);
         }
 
         internal void PlayTargetActionAnimation(string targetAnimation, bool isPerfomingAction, bool applyRootMotion = true, bool canRotate = false, bool canMove = false) {
