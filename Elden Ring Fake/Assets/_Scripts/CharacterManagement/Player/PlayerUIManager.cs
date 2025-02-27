@@ -9,6 +9,8 @@ namespace SG {
         [Header("---------- Network Join ----------")]
         [SerializeField] bool startGameAsClient;
 
+        PlayerUIHudManager _playerUIHudManager;
+
         void Awake() {
             if (Instance == null) {
                 Instance = this;
@@ -16,6 +18,8 @@ namespace SG {
             else {
                 Destroy(gameObject);
             }
+
+            _playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
         }
 
         void Start() {
@@ -28,6 +32,10 @@ namespace SG {
                 NetworkManager.Singleton.Shutdown();
                 NetworkManager.Singleton.StartClient();
             }
+        }
+
+        internal PlayerUIHudManager GetPlayerUIHudManager() {
+            return _playerUIHudManager;
         }
     }
 }

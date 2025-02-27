@@ -21,6 +21,11 @@ namespace SG {
         [Header("---------- Flags ----------")]
         NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+        [Header("---------- Stats ----------")]
+        [SerializeField] NetworkVariable<int> endurance = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [SerializeField] NetworkVariable<float> currentStamina = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [SerializeField] NetworkVariable<int> maxStamina = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
         protected virtual void Awake() {
             _characterManager = GetComponent<CharacterManager>();
         }
@@ -102,6 +107,26 @@ namespace SG {
 
         internal void SetIsSprinting(bool state) {
             isSprinting.Value = state;
+        }
+
+        internal int GetEndurace() {
+            return endurance.Value;
+        }
+
+        internal NetworkVariable<float> GetCurrentStamina() {
+            return currentStamina;
+        }
+
+        internal void SetCurrentStamina(float newValue) {
+            currentStamina.Value = newValue;
+        }
+
+        internal int GetMaxStamina() {
+            return maxStamina.Value;
+        }
+
+        internal void SetMaxStamina(int maxValue) {
+            maxStamina.Value = maxValue;
         }
     }
 }

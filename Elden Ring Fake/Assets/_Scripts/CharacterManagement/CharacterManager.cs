@@ -36,16 +36,16 @@ namespace SG {
             }
         }
 
+        protected virtual void LateUpdate() {
+
+        }   
+
         internal CharacterController GetCharacterController() {
             return _characterController;
         }
 
         internal CharacterNetworkManager GetCharacterNetworkManager() {
             return _characterNetworkManager;
-        }
-
-        protected virtual void LateUpdate() {
-
         }
 
         internal Animator GetAnimator() {

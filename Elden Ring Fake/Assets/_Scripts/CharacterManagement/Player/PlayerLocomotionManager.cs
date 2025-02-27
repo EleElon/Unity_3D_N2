@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -12,10 +13,13 @@ namespace SG {
         [Header("---------- Movement Settings ----------")]
         Vector3 moveDirection;
         Vector3 targetRotationDirection;
-        float walkingSpeed = 2f, runningSpeed = 5f, sprintingSpeed = 6.5f, rotationSpeed = 15;
+        float walkingSpeed = 2f, runningSpeed = 5f;
+        float rotationSpeed = 15;
+        float sprintingSpeed = 6.5f, sprintingStaminaCost = 2;
 
         [Header("---------- Dodge ----------")]
         Vector3 rollDirection;
+        float dodgeStaminaCost = 25;
 
         protected override void Awake() {
             base.Awake();
@@ -102,16 +106,32 @@ namespace SG {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
             }
 
+            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0) {
+                _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
+                return;
+            }
+
             if (moveAmount >= 0.5) {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(true);
             }
             else {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
             }
+
+            if (_playerManager.GetPlayerNetworkManager().GetIsSprinting()) {
+                float tempCurrentStamina = _playerManager.GetPlayerNetworkManager().GetCurrentStamina().Value;
+                // int newTempStamina = tempCurrentStamina - Mathf.RoundToInt(sprintingStaminaCost * Time.deltaTime);
+                tempCurrentStamina -= sprintingStaminaCost * Time.deltaTime;
+
+                _playerManager.GetPlayerNetworkManager().SetCurrentStamina(tempCurrentStamina);
+            }
         }
 
         internal void AttemptToPerformDodge() {
             if (_playerManager.GetIsPerformingAction())
+                return;
+
+            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0)
                 return;
 
             if (PlayerInputManager.Instance.GetMoveAmount() > 0) {
@@ -128,6 +148,8 @@ namespace SG {
             else {
                 _playerManager.GetPlayerAnimatorManager().PlayTargetActionAnimation("Back_Step_01", true, true);
             }
+
+            _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value -= dodgeStaminaCost;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace SG {
         PlayerLocomotionManager _playerLocomotionManager;
         PlayerAnimatorManager _playerAnimatorManager;
         PlayerNetworkManager _playerNetworkManager;
+        PlayerStatManager _playerStatManager;
 
         protected override void Awake() {
             base.Awake();
@@ -13,6 +14,7 @@ namespace SG {
             _playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             _playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             _playerNetworkManager = GetComponent<PlayerNetworkManager>();
+            _playerStatManager = GetComponent<PlayerStatManager>();
         }
 
         protected override void Update() {
@@ -22,6 +24,8 @@ namespace SG {
                 return;
 
             _playerLocomotionManager.HandleAllMovement();
+
+            _playerStatManager.RegenerateStamina();
         }
 
         protected override void LateUpdate() {
@@ -39,6 +43,14 @@ namespace SG {
             if (IsOwner) {
                 PlayerCameraManager.Instance.SetPlayerManager(this);
                 PlayerInputManager.Instance.SetPlayerManager(this);
+                _playerNetworkManager.GetCurrentStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewStaminaValue;
+                _playerNetworkManager.GetCurrentStamina().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
+
+                _playerNetworkManager.SetMaxStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+
+                _playerNetworkManager.SetCurrentStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+
+                PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxStaminaValue(_playerNetworkManager.GetMaxStamina());
             }
         }
 
