@@ -12,18 +12,18 @@ namespace SG {
         PlayerManager _playerManager;
 
         [Header("---------- Player Movement Input ----------")]
-        [SerializeField] Vector2 movementInput;
-        [SerializeField] float verticalInput, horizontalInput;
-        [SerializeField] float moveAmount;
+        Vector2 movementInput;
+        float verticalInput, horizontalInput;
+        float moveAmount;
 
         [Header("---------- Camera Movement Input ----------")]
-        [SerializeField] Vector2 cameraInput;
-        [SerializeField] float cameraVerticalInput, cameraHorizontalInput;
+        Vector2 cameraInput;
+        float cameraVerticalInput, cameraHorizontalInput;
 
         [Header("---------- Player Actions Input ----------")]
-        [SerializeField] bool dodgeInput = false;
+        bool dodgeInput = false;
 
-        [SerializeField] bool sprintInput = false;
+        bool sprintInput = false;
 
         void OnEnable() {
             if (_playerControls == null) {

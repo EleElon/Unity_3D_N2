@@ -26,6 +26,7 @@ namespace SG {
             _playerLocomotionManager.HandleAllMovement();
 
             _playerStatManager.RegenerateStamina();
+            _playerStatManager.ChangeEaseStamina();
         }
 
         protected override void LateUpdate() {
@@ -44,6 +45,8 @@ namespace SG {
                 PlayerCameraManager.Instance.SetPlayerManager(this);
                 PlayerInputManager.Instance.SetPlayerManager(this);
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewStaminaValue;
+                //FIXME: fixed ease stamina bar
+                _playerNetworkManager.GetCurrentEaseStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewEaseStaminaValue;
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
 
                 _playerNetworkManager.SetMaxStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
@@ -51,6 +54,8 @@ namespace SG {
                 _playerNetworkManager.SetCurrentStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
 
                 PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxStaminaValue(_playerNetworkManager.GetMaxStamina());
+                //FIXME: fixed ease stamina bar
+                PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseStaminaValue(_playerNetworkManager.GetMaxStamina());
             }
         }
 

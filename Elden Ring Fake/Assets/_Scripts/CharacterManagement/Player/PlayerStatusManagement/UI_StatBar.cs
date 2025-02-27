@@ -7,7 +7,7 @@ namespace SG {
         Slider slider;
 
         protected virtual void Awake() {
-            slider = GetComponent<Slider>();
+            slider = GetComponentInChildren<Slider>();
         }
 
         internal virtual void SetStat(float newValue) {

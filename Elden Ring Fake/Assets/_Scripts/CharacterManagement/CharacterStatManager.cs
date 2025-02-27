@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace SG {
@@ -6,7 +7,8 @@ namespace SG {
         CharacterManager _characterManager;
 
         [Header("---------- Stamina Regenaration ----------")]
-        int staminaAmount = 10;
+        int staminaAmount = 2;
+        float targetStamina;
         float staminaRegenatationTimer = 0;
         float staminaTickTimer;
         float staminaRegenerateDelay = 2;
@@ -24,6 +26,9 @@ namespace SG {
         }
 
         internal virtual void RegenerateStamina() {
+            float currentStamina = _characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value;
+            float maxStamina = _characterManager.GetCharacterNetworkManager().GetMaxStamina();
+
             if (!_characterManager.IsOwner)
                 return;
 
@@ -36,15 +41,27 @@ namespace SG {
             staminaRegenatationTimer += Time.deltaTime;
 
             if (staminaRegenatationTimer >= staminaRegenerateDelay) {
-                if (_characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value < _characterManager.GetCharacterNetworkManager().GetMaxStamina()) {
+                if (currentStamina < maxStamina) {
                     staminaTickTimer += Time.deltaTime;
 
                     if (staminaTickTimer >= 0.1) {
                         staminaTickTimer = 0;
 
-                        _characterManager.GetCharacterNetworkManager().SetCurrentStamina(_characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value + staminaAmount);
+                        targetStamina = Mathf.Min(currentStamina + staminaAmount, maxStamina);
+
+                        _characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value = Mathf.Lerp(currentStamina, targetStamina, 1f);
                     }
                 }
+            }
+        }
+
+        //FIXME: fixed ease stamina bar
+        internal virtual void ChangeEaseStamina() {
+            if (targetStamina < _characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value) {
+                _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value = Mathf.Lerp(_characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value, targetStamina, 0.1f);
+            }
+            else {
+                _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value = targetStamina;
             }
         }
 

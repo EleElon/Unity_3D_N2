@@ -15,7 +15,7 @@ namespace SG {
         Vector3 targetRotationDirection;
         float walkingSpeed = 2f, runningSpeed = 5f;
         float rotationSpeed = 15;
-        float sprintingSpeed = 6.5f, sprintingStaminaCost = 2;
+        float sprintingSpeed = 6.5f, sprintingStaminaCost = 10;
 
         [Header("---------- Dodge ----------")]
         Vector3 rollDirection;
@@ -106,7 +106,7 @@ namespace SG {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
             }
 
-            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0) {
+            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < sprintingStaminaCost) {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
                 return;
             }
@@ -131,7 +131,7 @@ namespace SG {
             if (_playerManager.GetIsPerformingAction())
                 return;
 
-            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0)
+            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < dodgeStaminaCost)
                 return;
 
             if (PlayerInputManager.Instance.GetMoveAmount() > 0) {
