@@ -9,9 +9,9 @@ namespace SG {
         [Header("---------- Stamina Regenaration ----------")]
         int staminaAmount = 2;
         float targetStamina;
-        float staminaRegenatationTimer = 0;
+        float staminaRegenatationTimer = 0, easeStaminaTimer;
         float staminaTickTimer;
-        float staminaRegenerateDelay = 2;
+        float staminaRegenerateDelay = 2, easeStaminaDelay = 1;
 
         protected virtual void Awake() {
             _characterManager = GetComponent<CharacterManager>();
@@ -29,14 +29,7 @@ namespace SG {
             float currentStamina = _characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value;
             float maxStamina = _characterManager.GetCharacterNetworkManager().GetMaxStamina();
 
-            if (!_characterManager.IsOwner)
-                return;
-
-            if (_characterManager.GetCharacterNetworkManager().GetIsSprinting())
-                return;
-
-            if (_characterManager.GetIsPerformingAction())
-                return;
+            OutFunctionCalculateStamina();
 
             staminaRegenatationTimer += Time.deltaTime;
 
@@ -55,13 +48,24 @@ namespace SG {
             }
         }
 
-        //FIXME: fixed ease stamina bar
+        internal virtual void UsingStamina() {
+            
+        }
+
         internal virtual void ChangeEaseStamina() {
-            if (targetStamina < _characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value) {
-                _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value = Mathf.Lerp(_characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value, targetStamina, 0.1f);
+            float currentStamina = _characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value;
+            float currentEaseStamina = _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value;
+
+            OutFunctionCalculateStamina();
+
+            if (easeStaminaTimer >= easeStaminaDelay) {
+                if (currentStamina < currentEaseStamina) {
+                    _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value = Mathf.Lerp(currentEaseStamina, currentStamina, 0.1f);
+                }
             }
-            else {
-                _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value = targetStamina;
+
+            if (currentEaseStamina < currentStamina) {
+                _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value = currentStamina;
             }
         }
 
@@ -69,6 +73,41 @@ namespace SG {
             if (currentStaminaAmount < previousStaminaAmount) {
                 staminaRegenatationTimer = 0;
             }
+        }
+
+        internal virtual void SetEaseTimer() {
+            if (!_characterManager.IsOwner) {
+                easeStaminaTimer = 0;
+                return;
+            }
+
+            if (_characterManager.GetCharacterNetworkManager().GetIsSprinting()) {
+                easeStaminaTimer = 0;
+                return;
+            }
+
+            if (_characterManager.GetIsPerformingAction()) {
+                easeStaminaTimer = 0;
+                return;
+            }
+
+            if (_characterManager.GetCharacterNetworkManager().GetCurrentStamina().Value < _characterManager.GetCharacterNetworkManager().GetCurrentEaseStamina().Value) {
+                easeStaminaTimer += Time.deltaTime;
+            }
+            else {
+                easeStaminaTimer = 0;
+            }
+        }
+
+        void OutFunctionCalculateStamina() {
+            if (!_characterManager.IsOwner)
+                return;
+
+            if (_characterManager.GetCharacterNetworkManager().GetIsSprinting())
+                return;
+
+            if (_characterManager.GetIsPerformingAction())
+                return;
         }
     }
 }

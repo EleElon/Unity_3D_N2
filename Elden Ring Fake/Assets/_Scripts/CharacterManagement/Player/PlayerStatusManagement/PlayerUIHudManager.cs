@@ -14,13 +14,12 @@ namespace SG {
             staminaBar.SetMaxStat(maxValue);
         }
 
-        //FIXME: fixed ease stamina bar
         internal void SetNewEaseStaminaValue(float oldValue, float newValue) {
-            staminaBar.SetStat(newValue);
+            easeStaminaBar.SetStat(newValue);
         }
 
         internal void SetMaxEaseStaminaValue(float maxValue) {
-            staminaBar.SetMaxStat(maxValue);
+            easeStaminaBar.SetMaxStat(maxValue);
         }
     }
 }

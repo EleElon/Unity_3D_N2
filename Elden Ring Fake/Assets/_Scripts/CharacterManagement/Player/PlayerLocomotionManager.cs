@@ -106,7 +106,7 @@ namespace SG {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
             }
 
-            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < sprintingStaminaCost) {
+            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0) {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
                 return;
             }
@@ -119,11 +119,7 @@ namespace SG {
             }
 
             if (_playerManager.GetPlayerNetworkManager().GetIsSprinting()) {
-                float tempCurrentStamina = _playerManager.GetPlayerNetworkManager().GetCurrentStamina().Value;
-                // int newTempStamina = tempCurrentStamina - Mathf.RoundToInt(sprintingStaminaCost * Time.deltaTime);
-                tempCurrentStamina -= sprintingStaminaCost * Time.deltaTime;
-
-                _playerManager.GetPlayerNetworkManager().SetCurrentStamina(tempCurrentStamina);
+                _playerManager.GetPlayerNetworkManager().GetCurrentStamina().Value -= sprintingStaminaCost * Time.deltaTime;
             }
         }
 
@@ -149,7 +145,7 @@ namespace SG {
                 _playerManager.GetPlayerAnimatorManager().PlayTargetActionAnimation("Back_Step_01", true, true);
             }
 
-            _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value -= dodgeStaminaCost;
+            _playerManager.GetPlayerNetworkManager().GetCurrentStamina().Value -= dodgeStaminaCost;
         }
     }
 }

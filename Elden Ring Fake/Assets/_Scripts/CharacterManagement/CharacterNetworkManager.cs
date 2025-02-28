@@ -126,6 +126,10 @@ namespace SG {
             return currentEaseStamina;
         }
 
+        internal void SetCurrentEaseStamina(float newValue) {
+            currentEaseStamina.Value = newValue;
+        }
+
         internal int GetMaxStamina() {
             return maxStamina.Value;
         }
