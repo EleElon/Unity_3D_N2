@@ -60,6 +60,22 @@ namespace SG {
             }
         }
 
+        internal void SaveGameDataToCurrentCharacterData(ref CharacterSavingData currentCharacterData) {
+            currentCharacterData.SetCharacterName(_playerNetworkManager.GetnSetCharacterName().Value.ToString());
+
+            currentCharacterData.SetXPosition(transform);
+            currentCharacterData.SetYPosition(transform);
+            currentCharacterData.SetZPosition(transform);
+        }
+
+        void LoadGameDataFromCharacterData(ref CharacterSavingData currentCharacterData) {
+            _playerNetworkManager.GetnSetCharacterName().Value = currentCharacterData.GetCharacterName();
+
+            Vector3 myPosition = new Vector3(currentCharacterData.GetXPosition(), currentCharacterData.GetYPosition(), currentCharacterData.GetZPosition());
+
+            transform.position = myPosition;
+        }
+
         internal PlayerAnimatorManager GetPlayerAnimatorManager() {
             return _playerAnimatorManager;
         }
