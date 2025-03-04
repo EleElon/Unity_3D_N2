@@ -124,5 +124,10 @@ namespace SG {
                     break;
             }
         }
+
+        public void LoadGameFromCharacterSlot() {
+            WorldSaveGameManager.Instance.SetCurrentCharacterSlotBeingUsed(_characterSlots);
+            WorldSaveGameManager.Instance.LoadGame();
+        }
     }
 }

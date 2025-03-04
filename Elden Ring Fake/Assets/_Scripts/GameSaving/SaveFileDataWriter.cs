@@ -37,7 +37,7 @@ namespace SG {
                 }
             }
             catch (System.Exception ex) {
-                Debug.Log("Error whilst trying to save character data, game not saved" + savePath + "\n" + ex);
+                Debug.LogError("Error whilst trying to save character data, game not saved" + savePath + "\n" + ex);
             }
         }
 

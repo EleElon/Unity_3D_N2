@@ -5,15 +5,15 @@ namespace SG {
     class CharacterSavingData {
 
         [Header("---------- Character Name ----------")]
-        string characterName;
+        string characterName = "Character";
 
         [Header("---------- Time Played ----------")]
         float secondPlayed;
 
         [Header("---------- World Coordinates ----------")]
-        float xPosition;
-        float yPosition;
-        float zPosition;
+        [SerializeField] float xPosition;
+        [SerializeField] float yPosition;
+        [SerializeField] float zPosition;
 
         internal string GetCharacterName() {
             return characterName;

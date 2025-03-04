@@ -8,7 +8,7 @@ namespace SG {
 
         internal static WorldSaveGameManager Instance { get; private set; }
 
-        [SerializeField] PlayerManager _playerManager;
+        PlayerManager _playerManager;
 
         [Header("---------- Save/Load ----------")]
         [SerializeField] bool saveGame;
@@ -22,7 +22,7 @@ namespace SG {
 
         [Header("---------- Current Character Data ----------")]
         CharacterSlots currentCharacterSlotBeingUsed;
-        CharacterSavingData currentCharacterData;
+        [SerializeField] CharacterSavingData currentCharacterData;
         string saveFileName;
 
         [Header("---------- Character Slots ----------")]
@@ -68,46 +68,72 @@ namespace SG {
 
             switch (characterSlots) {
                 case CharacterSlots.CharacterSlot_00:
-                    fileName = "characterSlot_01";
+                    fileName = "characterSlot_00";
                     break;
                 case CharacterSlots.CharacterSlot_01:
-                    fileName = "characterSlot_02";
+                    fileName = "characterSlot_01";
                     break;
                 case CharacterSlots.CharacterSlot_02:
-                    fileName = "characterSlot_03";
+                    fileName = "characterSlot_02";
                     break;
                 case CharacterSlots.CharacterSlot_03:
-                    fileName = "characterSlot_04";
+                    fileName = "characterSlot_03";
                     break;
                 case CharacterSlots.CharacterSlot_04:
-                    fileName = "characterSlot_05";
+                    fileName = "characterSlot_04";
                     break;
                 case CharacterSlots.CharacterSlot_05:
-                    fileName = "characterSlot_06";
+                    fileName = "characterSlot_05";
                     break;
                 case CharacterSlots.CharacterSlot_06:
-                    fileName = "characterSlot_07";
+                    fileName = "characterSlot_06";
                     break;
                 case CharacterSlots.CharacterSlot_07:
-                    fileName = "characterSlot_08";
+                    fileName = "characterSlot_07";
                     break;
                 case CharacterSlots.CharacterSlot_08:
-                    fileName = "characterSlot_09";
+                    fileName = "characterSlot_08";
                     break;
                 case CharacterSlots.CharacterSlot_09:
-                    fileName = "characterSlot_10";
+                    fileName = "characterSlot_09";
                     break;
             }
             return fileName;
         }
 
-        internal void CreateNewGame() {
-            saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(currentCharacterSlotBeingUsed);
+        internal void AttemptToCreateNewGame() {
+            _saveFileDataWriter = new SaveFileDataWriter();
 
-            currentCharacterData = new CharacterSavingData();
+            _saveFileDataWriter.SetSaveDataDirectoryPath(Application.persistentDataPath);
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_00));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_00;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_01));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_01;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopup();
         }
 
-        void LoadGame() {
+        internal void LoadGame() {
             saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(currentCharacterSlotBeingUsed);
 
             _saveFileDataWriter = new SaveFileDataWriter();
@@ -131,6 +157,8 @@ namespace SG {
 
         internal IEnumerator LoadWorldScene() {
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
+
+            _playerManager.LoadGameDataFromCharacterData(ref currentCharacterData);
 
             // yield return null;
 
@@ -182,6 +210,14 @@ namespace SG {
 
         internal int GetWorldSceneIndex() {
             return worldSceneIndex;
+        }
+
+        internal void SetCurrentCharacterSlotBeingUsed(CharacterSlots characterSlots) {
+            currentCharacterSlotBeingUsed = characterSlots;
+        }
+
+        internal void SetPlayerManager(PlayerManager playerManager) {
+            _playerManager = playerManager;
         }
 
         internal CharacterSavingData GetCharacterSlot00() {

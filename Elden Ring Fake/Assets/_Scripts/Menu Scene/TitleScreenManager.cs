@@ -5,21 +5,36 @@ using UnityEngine.UI;
 namespace SG {
     class TitleScreenManager : MonoBehaviour {
 
+        internal static TitleScreenManager Instance { get; private set; }
+
         [Header("---------- Menus ----------")]
         [SerializeField] GameObject titleScreenMainMenu;
         [SerializeField] GameObject titleScreenLoadMenu;
 
         [Header("---------- Buttons ----------")]
         [SerializeField] Button loadMenuReturnButton;
+        [SerializeField] Button mainMenuNewGameButton;
         [SerializeField] Button mainMenuLoadGameButton;
+
+        [Header("---------- Pop Ups ----------")]
+        [SerializeField] GameObject noCharacterSlotPopUp;
+        [SerializeField] Button noCharacterSlotOkayButton;
+
+        void Awake() {
+            if (Instance == null) {
+                Instance = this;
+            }
+            else {
+                Destroy(gameObject);
+            }
+        }
 
         public void StartNetworkAsHost() {
             NetworkManager.Singleton.StartHost();
         }
 
         public void StartNewGame() {
-            WorldSaveGameManager.Instance.CreateNewGame();
-            StartCoroutine(WorldSaveGameManager.Instance.LoadWorldScene());
+            WorldSaveGameManager.Instance.AttemptToCreateNewGame();
         }
 
         public void OpenLoadGameMenu() {
@@ -34,6 +49,16 @@ namespace SG {
             titleScreenMainMenu.SetActive(true);
 
             mainMenuLoadGameButton.Select();
+        }
+
+        internal void DisplayNoFreeCharacterSlotsPopup() {
+            noCharacterSlotPopUp.SetActive(true);
+            noCharacterSlotOkayButton.Select();
+        }
+
+        public void CloseNoFreeCharacterSlotsPopUp() {
+            noCharacterSlotPopUp.SetActive(false);
+            mainMenuNewGameButton.Select();
         }
     }
 }

@@ -45,6 +45,8 @@ namespace SG {
             if (IsOwner) {
                 PlayerCameraManager.Instance.SetPlayerManager(this);
                 PlayerInputManager.Instance.SetPlayerManager(this);
+                WorldSaveGameManager.Instance.SetPlayerManager(this);
+
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewStaminaValue;
                 _playerNetworkManager.GetCurrentEaseStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewEaseStaminaValue;
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
@@ -68,7 +70,7 @@ namespace SG {
             currentCharacterData.SetZPosition(transform);
         }
 
-        void LoadGameDataFromCharacterData(ref CharacterSavingData currentCharacterData) {
+        internal void LoadGameDataFromCharacterData(ref CharacterSavingData currentCharacterData) {
             _playerNetworkManager.GetnSetCharacterName().Value = currentCharacterData.GetCharacterName();
 
             Vector3 myPosition = new Vector3(currentCharacterData.GetXPosition(), currentCharacterData.GetYPosition(), currentCharacterData.GetZPosition());
