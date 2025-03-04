@@ -8,7 +8,7 @@ namespace SG {
         string saveDataDirectoryPath;
         string saveFileName;
 
-        bool CheckToSeeIfFileExists() {
+        internal bool CheckToSeeIfFileExists() {
             if (File.Exists(Path.Combine(saveDataDirectoryPath, saveFileName))) {
                 return true;
             }

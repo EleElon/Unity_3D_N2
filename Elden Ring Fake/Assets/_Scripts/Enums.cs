@@ -5,6 +5,7 @@ class Enums : MonoBehaviour {
 }
 
 enum CharacterSlots {
+    CharacterSlot_00,
     CharacterSlot_01,
     CharacterSlot_02,
     CharacterSlot_03,
@@ -13,6 +14,5 @@ enum CharacterSlots {
     CharacterSlot_06,
     CharacterSlot_07,
     CharacterSlot_08,
-    CharacterSlot_09,
-    CharacterSlot_10
+    CharacterSlot_09
 }
