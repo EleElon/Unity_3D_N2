@@ -8,8 +8,8 @@ namespace SG {
         UI_Character_Save_Slot _UI_Character_Save_Slot;
 
         [Header("---------- Title Screen Inputs ----------")]
-        [SerializeField] bool deleteCharacterSlot = false;
-        [SerializeField] bool chooseCharacterSlot = false;
+        bool deleteCharacterSlot = false;
+        bool chooseCharacterSlot = false;
 
         void OnEnable() {
             _UI_Character_Save_Slot = GetComponentInChildren<UI_Character_Save_Slot>();

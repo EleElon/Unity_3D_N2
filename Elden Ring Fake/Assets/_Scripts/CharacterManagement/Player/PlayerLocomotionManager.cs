@@ -20,6 +20,7 @@ namespace SG {
         [Header("---------- Dodge ----------")]
         Vector3 rollDirection;
         float dodgeStaminaCost = 25;
+        float jumpStaminaCost = 11;
 
         protected override void Awake() {
             base.Awake();
@@ -146,6 +147,30 @@ namespace SG {
             }
 
             _playerManager.GetPlayerNetworkManager().GetCurrentStamina().Value -= dodgeStaminaCost;
+        }
+
+        internal void AttemptToPerformJump() {
+            if (_playerManager.GetIsPerformingAction())
+                return;
+
+            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < dodgeStaminaCost)
+                return;
+
+            if (_playerManager.GetIsJumping())
+                return;
+
+            if (_playerManager.GetIsGrounded())
+                return;
+
+            _playerManager.GetPlayerAnimatorManager().PlayTargetActionAnimation("Main_Jump_01", false);
+
+            _playerManager.SetIsJumping(true);
+
+            _playerManager.GetPlayerNetworkManager().GetCurrentStamina().Value -= jumpStaminaCost;
+        }
+
+        void ApplyJumpingVelocity() {
+            
         }
     }
 }

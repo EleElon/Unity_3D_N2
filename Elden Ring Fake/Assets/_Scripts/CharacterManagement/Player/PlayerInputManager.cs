@@ -22,8 +22,8 @@ namespace SG {
 
         [Header("---------- Player Actions Input ----------")]
         bool dodgeInput = false;
-
         bool sprintInput = false;
+        bool jumpInput = false;
 
         void OnEnable() {
             if (_playerControls == null) {
@@ -34,6 +34,8 @@ namespace SG {
                 _playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
 
                 _playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+
+                _playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
 
                 _playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
                 _playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
@@ -149,6 +151,14 @@ namespace SG {
             }
             else {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
+            }
+        }
+
+        void HandleJumpInput() {
+            if (jumpInput) {
+                jumpInput = false;
+
+                _playerManager.GetPlayerLocomotionManager().AttemptToPerformJump();
             }
         }
 

@@ -10,9 +10,12 @@ namespace SG {
 
         PlayerManager _playerManager;
 
+        [Header("---------- Scene Load ----------")]
+        bool isSceneLoaded = false;
+
         [Header("---------- Save/Load ----------")]
-        [SerializeField] bool saveGame;
-        [SerializeField] bool loadGame;
+        bool saveGame;
+        bool loadGame;
 
         [Header("---------- World Scene Index ----------")]
         int worldSceneIndex = 1;
@@ -280,6 +283,8 @@ namespace SG {
 
             yield return new WaitForSeconds(1);
             loadOperation.allowSceneActivation = true;
+
+            isSceneLoaded = true;
         }
 
         void LoadAllCharacterProfile() {
@@ -367,6 +372,10 @@ namespace SG {
 
         internal CharacterSavingData GetCharacterSlot09() {
             return characterSlot09;
+        }
+
+        internal bool GetIsSceneLoaded() {
+            return isSceneLoaded;
         }
     }
 }

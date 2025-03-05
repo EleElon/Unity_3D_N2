@@ -11,7 +11,7 @@ namespace SG {
 
         [Header("---------- Flags ----------")]
         bool isPerformingAction = false;
-        bool canRotate = true, canMove = true;
+        bool canRotate = true, canMove = true, isJumping = false, isGrounded = true;
         bool applyRootMotion = false;
 
         protected virtual void Awake() {
@@ -24,6 +24,8 @@ namespace SG {
         }
 
         protected virtual void Update() {
+            _animator.SetBool("IsGrounded", isGrounded);
+
             if (IsOwner) {
                 _characterNetworkManager.SetNetworkPosition(transform.position);
                 _characterNetworkManager.SetNetworkRotation(transform.rotation);
@@ -38,7 +40,7 @@ namespace SG {
 
         protected virtual void LateUpdate() {
 
-        }   
+        }
 
         internal CharacterController GetCharacterController() {
             return _characterController;
@@ -82,6 +84,22 @@ namespace SG {
 
         internal void SetApplyRootMotion(bool state) {
             applyRootMotion = state;
+        }
+
+        internal bool GetIsJumping() {
+            return isJumping;
+        }
+
+        internal void SetIsJumping(bool state) {
+            isJumping = state;
+        }
+
+        internal bool GetIsGrounded() {
+            return isGrounded;
+        }
+
+        internal void SetIsGrounded(bool state) {
+            isGrounded = state;
         }
     }
 }

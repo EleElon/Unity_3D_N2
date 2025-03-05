@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 1767064100770371227}
   - component: {fileID: 3567270060408227828}
   - component: {fileID: 4785505072525397171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DefaultPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,6 +80,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  canRotate: 1
+  canMove: 1
+  isJumping: 0
+  isGrounded: 1
 --- !u!114 &3135286265311381083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7ff9b1f7bfde846a69553159046c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckSphereRadius: 0.02
+  yVelocity: {x: 0, y: 0, z: 0}
+  groundedYVelocity: -20
+  fallStartYVelocity: -5
 --- !u!114 &1920882037112342004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +176,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.68, z: 0}
+  m_Center: {x: 0, y: 0.78, z: 0}
 --- !u!95 &3567270060408227828
 Animator:
   serializedVersion: 7
@@ -311,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ad932253e8dc8841948afa5d1a0d051, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ad932253e8dc8841948afa5d1a0d051, type: 3}
       propertyPath: m_LocalPosition.z
