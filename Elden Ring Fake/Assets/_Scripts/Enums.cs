@@ -14,5 +14,6 @@ enum CharacterSlots {
     CharacterSlot_06,
     CharacterSlot_07,
     CharacterSlot_08,
-    CharacterSlot_09
+    CharacterSlot_09,
+    NO_SLOT
 }

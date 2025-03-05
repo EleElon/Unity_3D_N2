@@ -17,7 +17,7 @@ namespace SG {
             }
         }
 
-        void DeleteSaveFile() {
+        internal void DeleteSaveFile() {
             File.Delete(Path.Combine(saveDataDirectoryPath, saveFileName));
         }
 

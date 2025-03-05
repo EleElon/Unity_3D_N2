@@ -125,9 +125,13 @@ namespace SG {
             }
         }
 
-        public void LoadGameFromCharacterSlot() {
+        internal void LoadGameFromCharacterSlot() {
             WorldSaveGameManager.Instance.SetCurrentCharacterSlotBeingUsed(_characterSlots);
             WorldSaveGameManager.Instance.LoadGame();
+        }
+
+        public void SelectedCurrentSlot() {
+            TitleScreenManager.Instance.SelectedCharacterSlot(_characterSlots);
         }
     }
 }

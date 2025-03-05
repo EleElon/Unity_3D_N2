@@ -4,6 +4,9 @@ namespace SG {
     [System.Serializable]
     class CharacterSavingData {
 
+        [Header("---------- Scene Index ----------")]
+        int sceneIndex = 1;
+
         [Header("---------- Character Name ----------")]
         string characterName = "Character";
 
@@ -45,6 +48,14 @@ namespace SG {
 
         internal void SetZPosition(Transform newPosition) {
             zPosition = newPosition.position.z;
+        }
+
+        internal int GetSceneIndex() {
+            return sceneIndex;
+        }
+
+        internal void SetSceneIndex(int index) {
+            sceneIndex = index;
         }
     }
 }

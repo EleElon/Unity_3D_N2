@@ -130,6 +130,102 @@ namespace SG {
                 return;
             }
 
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_02));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_02;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_03));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_03;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_04));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_04;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_05));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_05;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_06));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_06;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_07));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_07;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_08));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_08;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlots.CharacterSlot_09));
+
+            if (!_saveFileDataWriter.CheckToSeeIfFileExists()) {
+                currentCharacterSlotBeingUsed = CharacterSlots.CharacterSlot_09;
+
+                currentCharacterData = new CharacterSavingData();
+
+                StartCoroutine(LoadWorldScene());
+
+                return;
+            }
+
             TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopup();
         }
 
@@ -155,8 +251,21 @@ namespace SG {
             _saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
         }
 
+        internal void DeleteGame(CharacterSlots characterSlots) {
+            _saveFileDataWriter = new SaveFileDataWriter();
+            _saveFileDataWriter.SetSaveDataDirectoryPath(Application.persistentDataPath);
+
+            _saveFileDataWriter.SetSaveFileName(DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(characterSlots));
+
+            _saveFileDataWriter.DeleteSaveFile();
+        }
+
         internal IEnumerator LoadWorldScene() {
+            //* if just want 1 world scene, uset this
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
+
+            //* if want to use different scenes for levels in project, use this
+            // AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.GetSceneIndex());
 
             _playerManager.LoadGameDataFromCharacterData(ref currentCharacterData);
 

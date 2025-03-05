@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SG {
     class PlayerManager : CharacterManager {
@@ -63,6 +64,7 @@ namespace SG {
         }
 
         internal void SaveGameDataToCurrentCharacterData(ref CharacterSavingData currentCharacterData) {
+            currentCharacterData.SetSceneIndex(SceneManager.GetActiveScene().buildIndex);
             currentCharacterData.SetCharacterName(_playerNetworkManager.GetnSetCharacterName().Value.ToString());
 
             currentCharacterData.SetXPosition(transform);
