@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6998895211826855923}
   - component: {fileID: 5649182490966059594}
   - component: {fileID: -8365212425997365705}
+  - component: {fileID: 2539853148417254162}
   - component: {fileID: 1767064100770371227}
   - component: {fileID: 3567270060408227828}
   - component: {fileID: 4785505072525397171}
@@ -80,10 +81,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  canRotate: 1
-  canMove: 1
-  isJumping: 0
-  isGrounded: 1
 --- !u!114 &3135286265311381083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,10 +96,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
-  groundCheckSphereRadius: 0.02
-  yVelocity: {x: 0, y: 0, z: 0}
-  groundedYVelocity: -20
-  fallStartYVelocity: -5
 --- !u!114 &1920882037112342004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +145,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6640c7fdc8b8e32489081b8f85462e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2539853148417254162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7495763540847280192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b35f8b794a67148a9d5610c006c8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: f98b5d4549ebcaa4b98fc3183bfab119, type: 2}
+  processEffect: 0
 --- !u!143 &1767064100770371227
 CharacterController:
   m_ObjectHideFlags: 0

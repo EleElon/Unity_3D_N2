@@ -133,6 +133,9 @@ namespace SG {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
             }
 
+            if (_playerManager.GetIsJumping())
+                return;
+
             if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0) {
                 _playerManager.GetPlayerNetworkManager().SetIsSprinting(false);
                 return;
@@ -154,7 +157,7 @@ namespace SG {
             if (_playerManager.GetIsPerformingAction())
                 return;
 
-            if (_playerManager.GetIsGrounded())
+            if (!_playerManager.GetIsGrounded())
                 return;
 
             if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < dodgeStaminaCost)

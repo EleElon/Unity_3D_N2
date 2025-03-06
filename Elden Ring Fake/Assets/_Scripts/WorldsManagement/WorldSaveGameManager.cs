@@ -14,8 +14,8 @@ namespace SG {
         bool isSceneLoaded = false;
 
         [Header("---------- Save/Load ----------")]
-        bool saveGame;
-        bool loadGame;
+        [SerializeField] bool saveGame;
+        [SerializeField] bool loadGame;
 
         [Header("---------- World Scene Index ----------")]
         int worldSceneIndex = 1;
