@@ -22,10 +22,17 @@ namespace SG {
         NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         [Header("---------- Stats ----------")]
-        NetworkVariable<int> endurance = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        NetworkVariable<float> currentStamina = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        NetworkVariable<float> currentEaseStamina = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        NetworkVariable<int> maxStamina = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [Header("Health")]
+        [SerializeField] NetworkVariable<int> vitality = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        NetworkVariable<float> currentHealth = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        NetworkVariable<float> currentEaseHealth = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        NetworkVariable<int> maxHealth = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+        [Header("Stamina")]
+        [SerializeField] NetworkVariable<int> endurance = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [SerializeField] NetworkVariable<float> currentStamina = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [SerializeField] NetworkVariable<float> currentEaseStamina = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [SerializeField] NetworkVariable<int> maxStamina = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         protected virtual void Awake() {
             _characterManager = GetComponent<CharacterManager>();
@@ -50,92 +57,58 @@ namespace SG {
             _characterManager.GetAnimator().CrossFade(animationID, 0.2f);
         }
 
-        internal Vector3 GetNetworkPositionVelocity() {
-            return networkPositionVelocity;
-        }
+        internal Vector3 GetNetworkPositionVelocity() { return networkPositionVelocity; }
 
-        internal float GetNetworkPositionSmoothTime() {
-            return networkPositionSmoothTime;
-        }
+        internal float GetNetworkPositionSmoothTime() { return networkPositionSmoothTime; }
 
-        internal float GetNetworkRotationSmoothTime() {
-            return networkRotationSmoothTime;
-        }
+        internal float GetNetworkRotationSmoothTime() { return networkRotationSmoothTime; }
 
-        internal void SetNetworkPosition(Vector3 newPosition) {
-            networkPosition.Value = newPosition;
-        }
+        internal void SetNetworkPosition(Vector3 newPosition) { networkPosition.Value = newPosition; }
 
-        internal Vector3 GetNetworkPosition() {
-            return networkPosition.Value;
-        }
+        internal Vector3 GetNetworkPosition() { return networkPosition.Value; }
 
-        internal void SetNetworkRotation(Quaternion newRotation) {
-            networkRotation.Value = newRotation;
-        }
+        internal void SetNetworkRotation(Quaternion newRotation) { networkRotation.Value = newRotation; }
 
-        internal Quaternion GetNetworkRotation() {
-            return networkRotation.Value;
-        }
+        internal Quaternion GetNetworkRotation() { return networkRotation.Value; }
 
-        internal float SetHorizontalMovement(float movement) {
-            return horizontalMovement.Value = movement;
-        }
+        internal float SetHorizontalMovement(float movement) { return horizontalMovement.Value = movement; }
 
-        internal float GetHorizontalMovement() {
-            return horizontalMovement.Value;
-        }
+        internal float GetHorizontalMovement() { return horizontalMovement.Value; }
 
-        internal float SetVerticalMovement(float movement) {
-            return verticalMovement.Value = movement;
-        }
+        internal float SetVerticalMovement(float movement) { return verticalMovement.Value = movement; }
 
-        internal float GetVerticalMovement() {
-            return verticalMovement.Value;
-        }
+        internal float GetVerticalMovement() { return verticalMovement.Value; }
 
-        internal float SetMoveAmount(float amount) {
-            return moveAmount.Value = amount;
-        }
+        internal float SetMoveAmount(float amount) { return moveAmount.Value = amount; }
 
-        internal float GetMoveAmount() {
-            return moveAmount.Value;
-        }
+        internal float GetMoveAmount() { return moveAmount.Value; }
 
-        internal bool GetIsSprinting() {
-            return isSprinting.Value;
-        }
+        internal bool GetIsSprinting() { return isSprinting.Value; }
 
-        internal void SetIsSprinting(bool state) {
-            isSprinting.Value = state;
-        }
+        internal void SetIsSprinting(bool state) { isSprinting.Value = state; }
 
-        internal int GetEndurace() {
-            return endurance.Value;
-        }
+        internal NetworkVariable<int> GetnSetVitality() { return vitality; }
 
-        internal NetworkVariable<float> GetCurrentStamina() {
-            return currentStamina;
-        }
+        internal NetworkVariable<int> GetnSetMaxHealth() { return maxHealth; }
 
-        internal void SetCurrentStamina(float newValue) {
-            currentStamina.Value = newValue;
-        }
+        internal NetworkVariable<float> GetnSetCurrentHealth() { return currentHealth; }
 
-        internal NetworkVariable<float> GetCurrentEaseStamina() {
-            return currentEaseStamina;
-        }
+        internal NetworkVariable<float> GetnSetCurrentEaseHealth() { return currentEaseHealth; }
 
-        internal void SetCurrentEaseStamina(float newValue) {
-            currentEaseStamina.Value = newValue;
-        }
+        internal NetworkVariable<int> GetEndurace() { return endurance; }
 
-        internal int GetMaxStamina() {
-            return maxStamina.Value;
-        }
+        internal void SetEndurance(int value) { endurance.Value = value; }
 
-        internal void SetMaxStamina(int maxValue) {
-            maxStamina.Value = maxValue;
-        }
+        internal NetworkVariable<float> GetCurrentStamina() { return currentStamina; }
+
+        internal void SetCurrentStamina(float newValue) { currentStamina.Value = newValue; }
+
+        internal NetworkVariable<float> GetCurrentEaseStamina() { return currentEaseStamina; }
+
+        internal void SetCurrentEaseStamina(float newValue) { currentEaseStamina.Value = newValue; }
+
+        internal int GetMaxStamina() { return maxStamina.Value; }
+
+        internal void SetMaxStamina(int maxValue) { maxStamina.Value = maxValue; }
     }
 }

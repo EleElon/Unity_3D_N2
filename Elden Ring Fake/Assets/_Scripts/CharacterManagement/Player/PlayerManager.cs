@@ -48,18 +48,39 @@ namespace SG {
                 PlayerInputManager.Instance.SetPlayerManager(this);
                 WorldSaveGameManager.Instance.SetPlayerManager(this);
 
+                //FIXME: when vitality, endurance has been changed, maxHealth, maxStamina has not changed 
+                _playerNetworkManager.GetnSetVitality().OnValueChanged += _playerNetworkManager.SetNewMaxHealthValue;
+                _playerNetworkManager.GetEndurace().OnValueChanged += _playerNetworkManager.SetNewMaxStaminaValue;
+
+                _playerNetworkManager.GetnSetCurrentHealth().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewHealthValue;
+                // _playerNetworkManager.GetnSetCurrentEaseHealth().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewEaseHealthValue;
+                // _playerNetworkManager.GetnSetCurrentHealth().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
+
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewStaminaValue;
                 _playerNetworkManager.GetCurrentEaseStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewEaseStaminaValue;
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
 
-                _playerNetworkManager.SetMaxStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+                // _playerNetworkManager.GetnSetMaxHealth().Value = _playerStatManager.CalculateHealthBasedOnEnduranceLevel(_playerNetworkManager.GetnSetVitality().Value);
 
-                _playerNetworkManager.SetCurrentStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+                // _playerNetworkManager.GetnSetCurrentHealth().Value = _playerStatManager.CalculateHealthBasedOnEnduranceLevel(_playerNetworkManager.GetnSetVitality().Value);
 
-                _playerNetworkManager.SetCurrentEaseStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+                // _playerNetworkManager.GetnSetCurrentEaseHealth().Value = _playerStatManager.CalculateHealthBasedOnEnduranceLevel(_playerNetworkManager.GetnSetVitality().Value);
 
-                PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxStaminaValue(_playerNetworkManager.GetMaxStamina());
-                PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseStaminaValue(_playerNetworkManager.GetCurrentStamina().Value);
+                // PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxHealthValue(_playerNetworkManager.GetnSetMaxHealth().Value);
+                // PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseHealthValue(_playerNetworkManager.GetnSetCurrentHealth().Value);
+
+                // _playerNetworkManager.GetCurrentStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewStaminaValue;
+                // _playerNetworkManager.GetCurrentEaseStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewEaseStaminaValue;
+                // _playerNetworkManager.GetCurrentStamina().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
+
+                // _playerNetworkManager.SetMaxStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+
+                // _playerNetworkManager.SetCurrentStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+
+                // _playerNetworkManager.SetCurrentEaseStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace()));
+
+                // PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxStaminaValue(_playerNetworkManager.GetMaxStamina());
+                // PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseStaminaValue(_playerNetworkManager.GetCurrentStamina().Value);
             }
         }
 
@@ -70,6 +91,12 @@ namespace SG {
             currentCharacterData.SetXPosition(transform);
             currentCharacterData.SetYPosition(transform);
             currentCharacterData.SetZPosition(transform);
+
+            currentCharacterData.SetVitality(_playerNetworkManager.GetnSetVitality().Value);
+            currentCharacterData.SetEndurance(_playerNetworkManager.GetEndurace().Value);
+
+            currentCharacterData.SetCurrentHealth(_playerNetworkManager.GetnSetCurrentHealth().Value);
+            currentCharacterData.SetCurrentStamina(_playerNetworkManager.GetCurrentStamina().Value);
         }
 
         internal void LoadGameDataFromCharacterData(ref CharacterSavingData currentCharacterData) {
@@ -78,18 +105,36 @@ namespace SG {
             Vector3 myPosition = new Vector3(currentCharacterData.GetXPosition(), currentCharacterData.GetYPosition(), currentCharacterData.GetZPosition());
 
             transform.position = myPosition;
+
+            //* Stat
+            _playerNetworkManager.GetnSetVitality().Value = currentCharacterData.GetVitality();
+            _playerNetworkManager.SetEndurance(currentCharacterData.GetEndurance());
+
+            _playerNetworkManager.GetnSetMaxHealth().Value = _playerStatManager.CalculateHealthBasedOnVitalityLevel(_playerNetworkManager.GetnSetVitality().Value);
+            _playerNetworkManager.SetMaxStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace().Value));
+
+            // _playerNetworkManager.GetnSetCurrentHealth().Value = currentCharacterData.GetCurrentHealth();
+            // _playerNetworkManager.SetCurrentStamina(currentCharacterData.GetCurrentStamina());
+
+            _playerNetworkManager.GetnSetCurrentHealth().Value = _playerNetworkManager.GetnSetMaxHealth().Value;
+            _playerNetworkManager.SetCurrentStamina(_playerNetworkManager.GetMaxStamina());
+
+            _playerNetworkManager.GetnSetCurrentEaseHealth().Value = _playerStatManager.CalculateHealthBasedOnVitalityLevel(_playerNetworkManager.GetnSetVitality().Value);
+            _playerNetworkManager.SetCurrentEaseStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace().Value));
+
+            PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxHealthValue(_playerNetworkManager.GetnSetMaxHealth().Value);
+            PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseHealthValue(_playerNetworkManager.GetnSetCurrentHealth().Value);
+
+            PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxStaminaValue(_playerNetworkManager.GetMaxStamina());
+            PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseStaminaValue(_playerNetworkManager.GetCurrentStamina().Value);
         }
 
-        internal PlayerAnimatorManager GetPlayerAnimatorManager() {
-            return _playerAnimatorManager;
-        }
+        internal PlayerAnimatorManager GetPlayerAnimatorManager() { return _playerAnimatorManager; }
 
-        internal PlayerLocomotionManager GetPlayerLocomotionManager() {
-            return _playerLocomotionManager;
-        }
+        internal PlayerLocomotionManager GetPlayerLocomotionManager() { return _playerLocomotionManager; }
 
-        internal PlayerNetworkManager GetPlayerNetworkManager() {
-            return _playerNetworkManager;
-        }
+        internal PlayerNetworkManager GetPlayerNetworkManager() { return _playerNetworkManager; }
+
+        internal PlayerStatManager GetPlayerStatManager() { return _playerStatManager; }
     }
 }

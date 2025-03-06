@@ -44,6 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651d003255c917f4d92f83cd609f3679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerManager: {fileID: 0}
   saveGame: 0
   loadGame: 0
+  currentCharacterData:
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    vitality: 0
+    currentHealth: 0
+    endurance: 0
+    currentStamina: 0

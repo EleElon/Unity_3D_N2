@@ -116,7 +116,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -128,7 +128,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -140,7 +140,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -152,7 +152,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -164,7 +164,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -176,7 +176,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -188,7 +188,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -200,7 +200,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -212,7 +212,7 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
@@ -224,12 +224,17 @@ namespace SG {
 
                 currentCharacterData = new CharacterSavingData();
 
-                StartCoroutine(LoadWorldScene());
+                NewGame();
 
                 return;
             }
 
             TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopup();
+        }
+
+        void NewGame() {
+            SaveGame();
+            StartCoroutine(LoadWorldScene());
         }
 
         internal void LoadGame() {

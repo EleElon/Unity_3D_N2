@@ -17,11 +17,23 @@ namespace SG {
             _characterManager = GetComponent<CharacterManager>();
         }
 
+        protected virtual void Start() {
+
+        }
+
+        internal int CalculateHealthBasedOnVitalityLevel(int vitality) {
+            float health = 0;
+
+            health = vitality * 15;
+
+            return Mathf.RoundToInt(health);
+        }
+
         internal int CalculateStaminaBasedOnEnduranceLevel(int endurance) {
             float stamina = 0;
 
             stamina = endurance * 10;
-
+            Debug.Log("set new max stamina");
             return Mathf.RoundToInt(stamina);
         }
 
@@ -46,10 +58,6 @@ namespace SG {
                     }
                 }
             }
-        }
-
-        internal virtual void UsingStamina() {
-            
         }
 
         internal virtual void ChangeEaseStamina() {

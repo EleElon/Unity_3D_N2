@@ -18,44 +18,46 @@ namespace SG {
         [SerializeField] float yPosition;
         [SerializeField] float zPosition;
 
-        internal string GetCharacterName() {
-            return characterName;
-        }
+        [Header("---------- Character Stat ----------")]
+        [SerializeField] int vitality;
+        [SerializeField] float currentHealth;
+        [SerializeField] int endurance;
+        [SerializeField] float currentStamina;
 
-        internal void SetCharacterName(string name) {
-            characterName = name;
-        }
+        internal string GetCharacterName() { return characterName; }
 
-        internal float GetXPosition() {
-            return xPosition;
-        }
+        internal void SetCharacterName(string name) { characterName = name; }
 
-        internal void SetXPosition(Transform newPosition) {
-            xPosition = newPosition.position.x;
-        }
+        internal float GetXPosition() { return xPosition; }
 
-        internal float GetYPosition() {
-            return yPosition;
-        }
+        internal void SetXPosition(Transform newPosition) { xPosition = newPosition.position.x; }
 
-        internal void SetYPosition(Transform newPosition) {
-            yPosition = newPosition.position.y;
-        }
+        internal float GetYPosition() { return yPosition; }
 
-        internal float GetZPosition() {
-            return zPosition;
-        }
+        internal void SetYPosition(Transform newPosition) { yPosition = newPosition.position.y; }
 
-        internal void SetZPosition(Transform newPosition) {
-            zPosition = newPosition.position.z;
-        }
+        internal float GetZPosition() { return zPosition; }
 
-        internal int GetSceneIndex() {
-            return sceneIndex;
-        }
+        internal void SetZPosition(Transform newPosition) { zPosition = newPosition.position.z; }
 
-        internal void SetSceneIndex(int index) {
-            sceneIndex = index;
-        }
+        internal int GetSceneIndex() { return sceneIndex; }
+
+        internal void SetSceneIndex(int index) { sceneIndex = index; }
+
+        internal int GetVitality() { return vitality; }
+
+        internal void SetVitality(int value) { vitality = value; }
+
+        internal float GetCurrentHealth() { return currentHealth; }
+
+        internal void SetCurrentHealth(float value) { currentHealth = value; }
+
+        internal int GetEndurance() { return endurance; }
+
+        internal void SetEndurance(int value) { endurance = value; }
+
+        internal float GetCurrentStamina() { return currentStamina; }
+
+        internal void SetCurrentStamina(float value) { currentStamina = value; }
     }
 }
