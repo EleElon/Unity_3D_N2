@@ -70,6 +70,7 @@ namespace SG {
             HandleCameraMovementInput();
             HandleDodgeInput();
             HandleSprintInput();
+            HandleJumpInput();
         }
 
         private void OnScreenChanged(Scene oldScene, Scene newScene) {

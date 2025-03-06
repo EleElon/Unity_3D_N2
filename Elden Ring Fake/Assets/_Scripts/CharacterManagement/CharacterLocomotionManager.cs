@@ -9,7 +9,7 @@ namespace SG {
         [SerializeField] LayerMask groundLayer;
         float groundCheckSphereRadius = 1;
         protected Vector3 yVelocity;
-        float gravityForce = -5.55f;
+        protected float gravityForce = -40f;
         protected float groundedYVelocity = -20;
         protected float fallStartYVelocity = -5;
         protected bool fallingVelocityHasBeenSet = false;

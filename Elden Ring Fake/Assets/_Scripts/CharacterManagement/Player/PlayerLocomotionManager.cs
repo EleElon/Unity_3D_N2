@@ -17,10 +17,16 @@ namespace SG {
         float rotationSpeed = 15;
         float sprintingSpeed = 6.5f, sprintingStaminaCost = 10;
 
+        [Header("---------- Jump ----------")]
+        Vector3 jumpDirection;
+        float jumpHeight = 4;
+        float jumpStaminaCost = 11;
+        float jumpForwardSpeed = 5;
+        float fallingSpeed = 2;
+
         [Header("---------- Dodge ----------")]
         Vector3 rollDirection;
         float dodgeStaminaCost = 25;
-        float jumpStaminaCost = 11;
 
         protected override void Awake() {
             base.Awake();
@@ -51,6 +57,8 @@ namespace SG {
 
             HandleGroundedMovement();
             HandleRotation();
+            HandleJumpingMovement();
+            HandleFallingMovement();
         }
 
         void GetMovementValues() {
@@ -80,6 +88,24 @@ namespace SG {
                 else if (PlayerInputManager.Instance.GetMoveAmount() <= 0.5f) {
                     _playerManager.GetCharacterController().Move(moveDirection * walkingSpeed * Time.deltaTime);
                 }
+            }
+        }
+
+        void HandleJumpingMovement() {
+            if (_playerManager.GetIsJumping()) {
+                _playerManager.GetCharacterController().Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
+            }
+        }
+
+        void HandleFallingMovement() {
+            if (!_playerManager.GetIsGrounded()) {
+                Vector3 fallingDirection;
+
+                fallingDirection = PlayerCameraManager.Instance.GetCamera().transform.forward * PlayerInputManager.Instance.GetVerticalInput();
+                fallingDirection += PlayerCameraManager.Instance.GetCamera().transform.right * PlayerInputManager.Instance.GetHorizontalInput();
+                fallingDirection.y = 0;
+
+                _playerManager.GetCharacterController().Move(fallingDirection * fallingSpeed * Time.deltaTime);
             }
         }
 
@@ -128,6 +154,9 @@ namespace SG {
             if (_playerManager.GetIsPerformingAction())
                 return;
 
+            if (_playerManager.GetIsGrounded())
+                return;
+
             if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < dodgeStaminaCost)
                 return;
 
@@ -153,13 +182,13 @@ namespace SG {
             if (_playerManager.GetIsPerformingAction())
                 return;
 
-            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < dodgeStaminaCost)
+            if (_playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value <= 0 || _playerManager.GetCharacterNetworkManager().GetCurrentStamina().Value < jumpStaminaCost)
                 return;
 
             if (_playerManager.GetIsJumping())
                 return;
 
-            if (_playerManager.GetIsGrounded())
+            if (!_playerManager.GetIsGrounded())
                 return;
 
             _playerManager.GetPlayerAnimatorManager().PlayTargetActionAnimation("Main_Jump_01", false);
@@ -167,10 +196,26 @@ namespace SG {
             _playerManager.SetIsJumping(true);
 
             _playerManager.GetPlayerNetworkManager().GetCurrentStamina().Value -= jumpStaminaCost;
+
+            jumpDirection = PlayerCameraManager.Instance.GetCamera().transform.forward * PlayerInputManager.Instance.GetVerticalInput();
+            jumpDirection += PlayerCameraManager.Instance.GetCamera().transform.right * PlayerInputManager.Instance.GetHorizontalInput();
+            jumpDirection.y = 0;
+
+            if (jumpDirection != Vector3.zero) {
+                if (_playerManager.GetPlayerNetworkManager().GetIsSprinting()) {
+                    jumpDirection *= 1;
+                }
+                else if (PlayerInputManager.Instance.GetMoveAmount() > 0.5) {
+                    jumpDirection *= 0.5f;
+                }
+                else if (PlayerInputManager.Instance.GetMoveAmount() <= 0.5) {
+                    jumpDirection *= 0.25f;
+                }
+            }
         }
 
-        void ApplyJumpingVelocity() {
-            
+        public void ApplyJumpingVelocity() {
+            yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
         }
     }
 }
