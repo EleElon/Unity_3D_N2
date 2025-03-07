@@ -42,64 +42,34 @@ namespace SG {
 
         }
 
-        internal CharacterController GetCharacterController() {
-            return _characterController;
-        }
+        internal CharacterController GetCharacterController() { return _characterController; }
 
-        internal CharacterNetworkManager GetCharacterNetworkManager() {
-            return _characterNetworkManager;
-        }
+        internal CharacterNetworkManager GetCharacterNetworkManager() { return _characterNetworkManager; }
 
-        internal Animator GetAnimator() {
-            return _animator;
-        }
+        internal Animator GetAnimator() { return _animator; }
 
-        internal bool GetIsPerformingAction() {
-            return isPerformingAction;
-        }
+        internal bool GetIsPerformingAction() { return isPerformingAction; }
 
-        internal void SetIsPerformingAction(bool state) {
-            isPerformingAction = state;
-        }
+        internal void SetIsPerformingAction(bool state) { isPerformingAction = state; }
 
-        internal bool GetCanMove() {
-            return canMove;
-        }
+        internal bool GetCanMove() { return canMove; }
 
-        internal void SetCanMove(bool state) {
-            canMove = state;
-        }
+        internal void SetCanMove(bool state) { canMove = state; }
 
-        internal bool GetCanRotate() {
-            return canRotate;
-        }
+        internal bool GetCanRotate() { return canRotate; }
 
-        internal void SetCanRotate(bool state) {
-            canRotate = state;
-        }
+        internal void SetCanRotate(bool state) { canRotate = state; }
 
-        internal bool GetApplyRootMotion() {
-            return applyRootMotion;
-        }
+        internal bool GetApplyRootMotion() { return applyRootMotion; }
 
-        internal void SetApplyRootMotion(bool state) {
-            applyRootMotion = state;
-        }
+        internal void SetApplyRootMotion(bool state) { applyRootMotion = state; }
 
-        internal bool GetIsJumping() {
-            return isJumping;
-        }
+        internal bool GetIsJumping() { return isJumping; }
 
-        internal void SetIsJumping(bool state) {
-            isJumping = state;
-        }
+        internal void SetIsJumping(bool state) { isJumping = state; }
 
-        internal bool GetIsGrounded() {
-            return isGrounded;
-        }
+        internal bool GetIsGrounded() { return isGrounded; }
 
-        internal void SetIsGrounded(bool state) {
-            isGrounded = state;
-        }
+        internal void SetIsGrounded(bool state) { isGrounded = state; }
     }
 }

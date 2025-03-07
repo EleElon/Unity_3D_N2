@@ -163,28 +163,16 @@ namespace SG {
             }
         }
 
-        internal float GetMoveAmount() {
-            return moveAmount;
-        }
+        internal float GetMoveAmount() { return moveAmount; }
 
-        internal float GetVerticalInput() {
-            return verticalInput;
-        }
+        internal float GetVerticalInput() { return verticalInput; }
 
-        internal float GetHorizontalInput() {
-            return horizontalInput;
-        }
+        internal float GetHorizontalInput() { return horizontalInput; }
 
-        internal float GetCameraVerticalInput() {
-            return cameraVerticalInput;
-        }
+        internal float GetCameraVerticalInput() { return cameraVerticalInput; }
 
-        internal float GetCameraHorizontalInput() {
-            return cameraHorizontalInput;
-        }
+        internal float GetCameraHorizontalInput() { return cameraHorizontalInput; }
 
-        internal void SetPlayerManager(PlayerManager playerManager) {
-            _playerManager = playerManager;
-        }
+        internal void SetPlayerManager(PlayerManager playerManager) { _playerManager = playerManager; }
     }
 }

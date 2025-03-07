@@ -327,60 +327,32 @@ namespace SG {
             characterSlot09 = _saveFileDataWriter.LoadSaveFile();
         }
 
-        internal int GetWorldSceneIndex() {
-            return worldSceneIndex;
-        }
+        internal int GetWorldSceneIndex() { return worldSceneIndex; }
 
-        internal void SetCurrentCharacterSlotBeingUsed(CharacterSlots characterSlots) {
-            currentCharacterSlotBeingUsed = characterSlots;
-        }
+        internal void SetCurrentCharacterSlotBeingUsed(CharacterSlots characterSlots) { currentCharacterSlotBeingUsed = characterSlots; }
 
-        internal void SetPlayerManager(PlayerManager playerManager) {
-            _playerManager = playerManager;
-        }
+        internal void SetPlayerManager(PlayerManager playerManager) { _playerManager = playerManager; }
 
-        internal CharacterSavingData GetCharacterSlot00() {
-            return characterSlot00;
-        }
+        internal CharacterSavingData GetCharacterSlot00() { return characterSlot00; }
 
-        internal CharacterSavingData GetCharacterSlot01() {
-            return characterSlot01;
-        }
+        internal CharacterSavingData GetCharacterSlot01() { return characterSlot01; }
 
-        internal CharacterSavingData GetCharacterSlot02() {
-            return characterSlot02;
-        }
+        internal CharacterSavingData GetCharacterSlot02() { return characterSlot02; }
 
-        internal CharacterSavingData GetCharacterSlot03() {
-            return characterSlot03;
-        }
+        internal CharacterSavingData GetCharacterSlot03() { return characterSlot03; }
 
-        internal CharacterSavingData GetCharacterSlot04() {
-            return characterSlot04;
-        }
+        internal CharacterSavingData GetCharacterSlot04() { return characterSlot04; }
 
-        internal CharacterSavingData GetCharacterSlot05() {
-            return characterSlot05;
-        }
+        internal CharacterSavingData GetCharacterSlot05() { return characterSlot05; }
 
-        internal CharacterSavingData GetCharacterSlot06() {
-            return characterSlot06;
-        }
+        internal CharacterSavingData GetCharacterSlot06() { return characterSlot06; }
 
-        internal CharacterSavingData GetCharacterSlot07() {
-            return characterSlot07;
-        }
+        internal CharacterSavingData GetCharacterSlot07() { return characterSlot07; }
 
-        internal CharacterSavingData GetCharacterSlot08() {
-            return characterSlot08;
-        }
+        internal CharacterSavingData GetCharacterSlot08() { return characterSlot08; }
 
-        internal CharacterSavingData GetCharacterSlot09() {
-            return characterSlot09;
-        }
+        internal CharacterSavingData GetCharacterSlot09() { return characterSlot09; }
 
-        internal bool GetIsSceneLoaded() {
-            return isSceneLoaded;
-        }
+        internal bool GetIsSceneLoaded() { return isSceneLoaded; }
     }
 }

@@ -17,8 +17,6 @@ namespace SG {
             }
         }
 
-        internal void SetStaminaDamage(int amount) {
-            staminaDamage = amount;
-        }
+        internal void SetStaminaDamage(int amount) { staminaDamage = amount; }
     }
 }

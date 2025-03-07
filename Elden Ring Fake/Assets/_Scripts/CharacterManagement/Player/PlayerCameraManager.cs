@@ -96,8 +96,6 @@ namespace SG {
             cameraObject.transform.localPosition = cameraObjectPosition;
         }
 
-        internal void SetPlayerManager(PlayerManager playerManager) {
-            _playerManager = playerManager;
-        }
+        internal void SetPlayerManager(PlayerManager playerManager) { _playerManager = playerManager; }
     }
 }

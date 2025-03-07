@@ -34,8 +34,6 @@ namespace SG {
             }
         }
 
-        internal PlayerUIHudManager GetPlayerUIHudManager() {
-            return _playerUIHudManager;
-        }
+        internal PlayerUIHudManager GetPlayerUIHudManager() { return _playerUIHudManager; }
     }
 }

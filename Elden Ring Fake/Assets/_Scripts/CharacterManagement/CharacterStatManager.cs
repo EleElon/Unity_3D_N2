@@ -33,7 +33,6 @@ namespace SG {
             float stamina = 0;
 
             stamina = endurance * 10;
-            Debug.Log("set new max stamina");
             return Mathf.RoundToInt(stamina);
         }
 

@@ -63,12 +63,8 @@ namespace SG {
             return characterData;
         }
 
-        internal void SetSaveDataDirectoryPath(string path) {
-            saveDataDirectoryPath = path;
-        }
+        internal void SetSaveDataDirectoryPath(string path) { saveDataDirectoryPath = path; }
 
-        internal void SetSaveFileName(string fileName) {
-            saveFileName = fileName;
-        }
+        internal void SetSaveFileName(string fileName) { saveFileName = fileName; }
     }
 }

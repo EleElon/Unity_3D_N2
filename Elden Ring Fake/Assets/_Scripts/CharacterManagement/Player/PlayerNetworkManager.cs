@@ -19,15 +19,17 @@ namespace SG {
         internal void SetNewMaxHealthValue(int oldVitality, int newVitality) {
             GetnSetMaxHealth().Value = _playerManager.GetPlayerStatManager().CalculateHealthBasedOnVitalityLevel(newVitality);
             PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxHealthValue(GetnSetMaxHealth().Value);
+            PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseHealthValue(GetnSetMaxHealth().Value);
             GetnSetCurrentHealth().Value = GetnSetMaxHealth().Value;
-            Debug.Log("changed hp");
+            GetnSetCurrentEaseHealth().Value = GetnSetCurrentHealth().Value;
         }
 
         internal void SetNewMaxStaminaValue(int oldEndurance, int newEndurance) {
             SetMaxStamina(_playerManager.GetPlayerStatManager().CalculateStaminaBasedOnEnduranceLevel(newEndurance));
             PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxStaminaValue(GetMaxStamina());
+            PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseStaminaValue(GetMaxStamina());
             SetCurrentStamina(GetMaxStamina());
-            Debug.Log("changed stamina");
+            SetCurrentEaseStamina(GetCurrentStamina().Value);
         }
 
         internal NetworkVariable<FixedString64Bytes> GetnSetCharacterName() { return characterName; }

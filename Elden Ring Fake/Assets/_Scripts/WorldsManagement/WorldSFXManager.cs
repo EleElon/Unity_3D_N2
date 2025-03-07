@@ -21,8 +21,6 @@ namespace SG {
             DontDestroyOnLoad(gameObject);
         }
 
-        internal AudioClip GetRollSFX() {
-            return rollSFX;
-        }
+        internal AudioClip GetRollSFX() { return rollSFX; }
     }
 }

@@ -10,8 +10,6 @@ namespace SG {
 
         }
 
-        internal void SetInstanceEffectID(int id) {
-            instantEffectID = id;
-        }
+        internal void SetInstanceEffectID(int id) { instantEffectID = id; }
     }
 }
