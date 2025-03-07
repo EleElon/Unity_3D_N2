@@ -370,7 +370,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Enter",
+                    "name": "Y",
                     "type": "Button",
                     "id": "8d01ac47-09e6-41cc-a7df-cc5cc0eda642",
                     "expectedControlType": "",
@@ -405,11 +405,11 @@
                 {
                     "name": "",
                     "id": "9b16f49e-9fb1-4818-9bc5-031d462b569e",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Enter",
+                    "action": "Y",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

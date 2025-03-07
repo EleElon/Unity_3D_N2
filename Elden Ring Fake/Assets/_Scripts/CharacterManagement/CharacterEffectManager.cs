@@ -9,7 +9,7 @@ namespace SG {
             _characterManager = GetComponent<CharacterManager>();
         }
 
-        protected virtual void ProcessInstantEffect(InstantCharacterEffect effect) {
+        internal virtual void ProcessInstantEffect(InstantCharacterEffect effect) {
             effect.ProcessEffect(_characterManager);
         }
     }

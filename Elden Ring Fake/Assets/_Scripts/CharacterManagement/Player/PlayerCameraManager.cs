@@ -10,8 +10,8 @@ namespace SG {
         [SerializeField] Transform cameraPivotTransform;
 
         [Header("---------- Camera Settings ----------")]
-        float cameraSmoothSpeed = 0.1f;
-        float leftAndRightRotationSpeed = 220f, upAndDownRotationSpeed = 220f;
+        float cameraSmoothSpeed = 1f;
+        float leftAndRightRotationSpeed = 22f, upAndDownRotationSpeed = 22f;
         float minimumPivot = -30, maximumPivot = 60;
         float cameraCollisionRadius = 0.2f;
         [SerializeField] LayerMask collideWithLayers;
@@ -56,8 +56,8 @@ namespace SG {
         }
 
         void HandleRotation() {
-            leftAndRightLookAngle += (PlayerInputManager.Instance.GetCameraHorizontalInput() * leftAndRightRotationSpeed) * Time.deltaTime;
-            upAndDownLookAngle -= (PlayerInputManager.Instance.GetCameraVerticalInput() * upAndDownRotationSpeed) * Time.deltaTime;
+            leftAndRightLookAngle += (PlayerInputManager.Instance.GetCameraHorizontalInput() * (leftAndRightRotationSpeed * 20)) * Time.deltaTime;
+            upAndDownLookAngle -= (PlayerInputManager.Instance.GetCameraVerticalInput() * (upAndDownRotationSpeed * 20)) * Time.deltaTime;
 
             upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
 

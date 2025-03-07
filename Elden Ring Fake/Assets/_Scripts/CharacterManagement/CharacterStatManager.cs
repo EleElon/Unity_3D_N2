@@ -93,6 +93,11 @@ namespace SG {
                 return;
             }
 
+            if (_characterManager.GetIsJumping()) {
+                easeStaminaTimer = 0;
+                return;
+            }
+
             if (_characterManager.GetIsPerformingAction()) {
                 easeStaminaTimer = 0;
                 return;
@@ -111,6 +116,9 @@ namespace SG {
                 return;
 
             if (_characterManager.GetCharacterNetworkManager().GetIsSprinting())
+                return;
+
+            if (_characterManager.GetIsJumping())
                 return;
 
             if (_characterManager.GetIsPerformingAction())

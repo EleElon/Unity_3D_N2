@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace SG {
-    [CreateAssetMenu(menuName = "Character Effects/Instant Effects/Take Stamina Damagek")]
+    [CreateAssetMenu(menuName = "Character Effects/Instant Effects/Take Stamina Damage")]
     class TakeStaminaDamageEffect : InstantCharacterEffect {
 
         float staminaDamage = 25;

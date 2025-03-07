@@ -17,7 +17,7 @@ namespace SG {
                 _playerControls = new PlayerControls();
 
                 _playerControls.UI.X.performed += i => deleteCharacterSlot = true;
-                _playerControls.UI.Enter.performed += i => chooseCharacterSlot = true;
+                _playerControls.UI.Y.performed += i => chooseCharacterSlot = true;
             }
 
             _playerControls.Enable();

@@ -6,6 +6,8 @@ namespace SG {
 
         internal static WorldCharacterEffectManager Instance { get; private set; }
 
+        [Header("---------- Take Damage ----------")]
+        [SerializeField] TakeDamageEffect _takeDamageEffect;
         [SerializeField] List<InstantCharacterEffect> instantEffect;
 
         void Awake() {
@@ -24,5 +26,7 @@ namespace SG {
                 instantEffect[i].SetInstanceEffectID(i);
             }
         }
+
+        internal TakeDamageEffect GetTakeDamageEffect() { return _takeDamageEffect; }
     }
 }

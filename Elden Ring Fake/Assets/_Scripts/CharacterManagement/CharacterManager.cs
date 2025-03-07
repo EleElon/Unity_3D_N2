@@ -4,8 +4,11 @@ using Unity.Netcode;
 namespace SG {
     class CharacterManager : NetworkBehaviour {
 
+        [Header("---------- Status ----------")]
+        NetworkVariable<bool> isDead = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         protected CharacterController _characterController;
         CharacterNetworkManager _characterNetworkManager;
+        CharacterEffectManager _characterEffectManager;
 
         Animator _animator;
 
@@ -19,6 +22,7 @@ namespace SG {
 
             _characterController = GetComponent<CharacterController>();
             _characterNetworkManager = GetComponent<CharacterNetworkManager>();
+            _characterEffectManager = GetComponent<CharacterEffectManager>();
 
             _animator = GetComponent<Animator>();
         }
@@ -46,6 +50,8 @@ namespace SG {
 
         internal CharacterNetworkManager GetCharacterNetworkManager() { return _characterNetworkManager; }
 
+        internal CharacterEffectManager GetCharacterEffectManager() { return _characterEffectManager; }
+
         internal Animator GetAnimator() { return _animator; }
 
         internal bool GetIsPerformingAction() { return isPerformingAction; }
@@ -71,5 +77,7 @@ namespace SG {
         internal bool GetIsGrounded() { return isGrounded; }
 
         internal void SetIsGrounded(bool state) { isGrounded = state; }
+
+        internal NetworkVariable<bool> GetIsDead() { return isDead; }
     }
 }
