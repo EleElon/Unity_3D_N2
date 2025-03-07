@@ -70,9 +70,9 @@ namespace SG {
             currentCharacterData.SetZPosition(transform);
 
             currentCharacterData.SetVitality(_playerNetworkManager.GetnSetVitality().Value);
-            currentCharacterData.SetEndurance(_playerNetworkManager.GetEndurace().Value);
-
             currentCharacterData.SetCurrentHealth(_playerNetworkManager.GetnSetCurrentHealth().Value);
+
+            currentCharacterData.SetEndurance(_playerNetworkManager.GetEndurace().Value);
             currentCharacterData.SetCurrentStamina(_playerNetworkManager.GetCurrentStamina().Value);
         }
 
@@ -90,8 +90,8 @@ namespace SG {
             _playerNetworkManager.GetnSetMaxHealth().Value = _playerStatManager.CalculateHealthBasedOnVitalityLevel(_playerNetworkManager.GetnSetVitality().Value);
             _playerNetworkManager.SetMaxStamina(_playerStatManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager.GetEndurace().Value));
 
-            // _playerNetworkManager.GetnSetCurrentHealth().Value = currentCharacterData.GetCurrentHealth();
-            // _playerNetworkManager.SetCurrentStamina(currentCharacterData.GetCurrentStamina());
+            _playerNetworkManager.GetnSetCurrentHealth().Value = currentCharacterData.GetCurrentHealth();
+            _playerNetworkManager.SetCurrentStamina(currentCharacterData.GetCurrentStamina());
 
             _playerNetworkManager.GetnSetCurrentHealth().Value = _playerNetworkManager.GetnSetMaxHealth().Value;
             _playerNetworkManager.SetCurrentStamina(_playerNetworkManager.GetMaxStamina());
