@@ -25,7 +25,7 @@ namespace SG {
             easeStaminaBar.gameObject.SetActive(true);
         }
 
-        internal void SetNewHealthValue(float oldValue, float newValue) {
+        internal void SetNewHealthValue(int oldValue, int newValue) {
             healthBar.SetStat(newValue);
         }
 

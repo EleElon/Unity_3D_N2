@@ -25,7 +25,7 @@ namespace SG {
         [Header("Health")]
         NetworkVariable<int> vitality = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         NetworkVariable<int> maxHealth = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        NetworkVariable<float> currentHealth = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        NetworkVariable<int> currentHealth = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         NetworkVariable<float> currentEaseHealth = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         [Header("Stamina")]
@@ -36,6 +36,18 @@ namespace SG {
 
         protected virtual void Awake() {
             _characterManager = GetComponent<CharacterManager>();
+        }
+
+        internal void CheckHP(int oldValue, int newValue) {
+            if (currentHealth.Value <= 0) {
+                StartCoroutine(_characterManager.ProcessDeathEvent());
+            }
+
+            if (_characterManager.IsOwner) {
+                if (currentHealth.Value > maxHealth.Value) {
+                    currentHealth.Value = maxHealth.Value;
+                }
+            }
         }
 
         [ServerRpc]
@@ -91,7 +103,7 @@ namespace SG {
 
         internal NetworkVariable<int> GetnSetMaxHealth() { return maxHealth; }
 
-        internal NetworkVariable<float> GetnSetCurrentHealth() { return currentHealth; }
+        internal NetworkVariable<int> GetnSetCurrentHealth() { return currentHealth; }
 
         internal NetworkVariable<float> GetnSetCurrentEaseHealth() { return currentEaseHealth; }
 

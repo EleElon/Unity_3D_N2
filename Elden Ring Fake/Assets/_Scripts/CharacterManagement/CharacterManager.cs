@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections;
 
 namespace SG {
     class CharacterManager : NetworkBehaviour {
@@ -9,6 +10,7 @@ namespace SG {
         protected CharacterController _characterController;
         CharacterNetworkManager _characterNetworkManager;
         CharacterEffectManager _characterEffectManager;
+        CharacterAnimatorManager _characterAnimatorManager;
 
         Animator _animator;
 
@@ -23,6 +25,7 @@ namespace SG {
             _characterController = GetComponent<CharacterController>();
             _characterNetworkManager = GetComponent<CharacterNetworkManager>();
             _characterEffectManager = GetComponent<CharacterEffectManager>();
+            _characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
 
             _animator = GetComponent<Animator>();
         }
@@ -43,6 +46,23 @@ namespace SG {
         }
 
         protected virtual void LateUpdate() {
+
+        }
+
+        internal virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false) {
+            if (IsOwner) {
+                _characterNetworkManager.GetnSetCurrentHealth().Value = 0;
+                isDead.Value = true;
+
+                if (!manuallySelectDeathAnimation) {
+                    _characterAnimatorManager.PlayTargetActionAnimation("Death_01", true);
+                }
+            }
+
+            yield return new WaitForSeconds(5);
+        }
+
+        protected virtual void ReviveCharacter() {
 
         }
 

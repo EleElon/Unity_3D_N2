@@ -53,7 +53,7 @@ namespace SG {
                 finalDamageDealt = 1;
             }
 
-            character.GetCharacterNetworkManager().GetnSetCurrentHealth().Value -= finalDamageDealt;
+            character.GetCharacterNetworkManager().GetnSetCurrentHealth().Value -= (int)finalDamageDealt;
         }
 
         internal void SetPhysicalDamage(float amount) { physicalDamage = amount; }

@@ -1,9 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace SG {
     class PlayerManager : CharacterManager {
 
+        [Header("---------- Debug Menu ----------")]
+        [SerializeField] bool respawnCharacter = false;
         PlayerLocomotionManager _playerLocomotionManager;
         PlayerAnimatorManager _playerAnimatorManager;
         PlayerNetworkManager _playerNetworkManager;
@@ -29,6 +32,11 @@ namespace SG {
             _playerStatManager.RegenerateStamina();
             _playerStatManager.SetEaseTimer();
             _playerStatManager.ChangeEaseStamina();
+            if (Input.GetKeyDown(KeyCode.K)) {
+                _playerNetworkManager.GetnSetCurrentHealth().Value = 0;
+            }
+
+            DebugMenu();
         }
 
         protected override void LateUpdate() {
@@ -53,12 +61,22 @@ namespace SG {
 
                 _playerNetworkManager.GetnSetCurrentHealth().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewHealthValue;
                 _playerNetworkManager.GetnSetCurrentEaseHealth().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewEaseHealthValue;
-                _playerNetworkManager.GetnSetCurrentHealth().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
+                // _playerNetworkManager.GetnSetCurrentHealth().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
 
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewStaminaValue;
                 _playerNetworkManager.GetCurrentEaseStamina().OnValueChanged += PlayerUIManager.Instance.GetPlayerUIHudManager().SetNewEaseStaminaValue;
                 _playerNetworkManager.GetCurrentStamina().OnValueChanged += _playerStatManager.ResetRegenerationTimer;
             }
+
+            _playerNetworkManager.GetnSetCurrentHealth().OnValueChanged += _playerNetworkManager.CheckHP;
+        }
+
+        internal override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false) {
+            if (IsOwner) {
+                PlayerUIManager.Instance.GetPlayerUIPopUpManager().SendYouDiedPopUp();
+            }
+
+            return base.ProcessDeathEvent(manuallySelectDeathAnimation);
         }
 
         internal void SaveGameDataToCurrentCharacterData(ref CharacterSavingData currentCharacterData) {
@@ -104,6 +122,23 @@ namespace SG {
 
             PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxStaminaValue(_playerNetworkManager.GetMaxStamina());
             PlayerUIManager.Instance.GetPlayerUIHudManager().SetMaxEaseStaminaValue(_playerNetworkManager.GetCurrentStamina().Value);
+        }
+
+        protected override void ReviveCharacter() {
+            base.ReviveCharacter();
+
+            if (IsOwner) {
+                _playerNetworkManager.GetnSetCurrentHealth().Value = _playerNetworkManager.GetnSetMaxHealth().Value;
+
+                _playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
+            }
+        }
+
+        void DebugMenu() {
+            if (respawnCharacter) {
+                respawnCharacter = false;
+                ReviveCharacter();
+            }
         }
 
         internal PlayerAnimatorManager GetPlayerAnimatorManager() { return _playerAnimatorManager; }

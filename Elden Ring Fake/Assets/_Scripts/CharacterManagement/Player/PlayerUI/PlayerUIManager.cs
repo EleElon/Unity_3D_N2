@@ -10,6 +10,7 @@ namespace SG {
         [SerializeField] bool startGameAsClient;
 
         PlayerUIHudManager _playerUIHudManager;
+        PlayerUIPopUpManager _playerUIPopUpManager;
 
         void Awake() {
             if (Instance == null) {
@@ -20,6 +21,7 @@ namespace SG {
             }
 
             _playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
+            _playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
         }
 
         void Start() {
@@ -35,5 +37,7 @@ namespace SG {
         }
 
         internal PlayerUIHudManager GetPlayerUIHudManager() { return _playerUIHudManager; }
+
+        internal PlayerUIPopUpManager GetPlayerUIPopUpManager() { return _playerUIPopUpManager; }
     }
 }

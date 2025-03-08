@@ -20,7 +20,7 @@ namespace SG {
 
         [Header("---------- Character Stat ----------")]
         [SerializeField] int vitality;
-        [SerializeField] float currentHealth;
+        [SerializeField] int currentHealth;
         [SerializeField] int endurance;
         [SerializeField] float currentStamina;
 
@@ -48,9 +48,9 @@ namespace SG {
 
         internal void SetVitality(int value) { vitality = value; }
 
-        internal float GetCurrentHealth() { return currentHealth; }
+        internal int GetCurrentHealth() { return currentHealth; }
 
-        internal void SetCurrentHealth(float value) { currentHealth = value; }
+        internal void SetCurrentHealth(int value) { currentHealth = value; }
 
         internal int GetEndurance() { return endurance; }
 
